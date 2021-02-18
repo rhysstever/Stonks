@@ -8,13 +8,18 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, Stock> stocks;
     public int multiplier;
     float timer;
+    Market market;
+
+    //Store the current time whenever we generate income so we can calculate how much
+    //To give the player in passive income when they come back.
+    System.DateTime currentTime;
 
     // Start is called before the first frame update
     void Start()
     {
         money = 500.0f;
         multiplier = 1;
-        LoadStocks();
+        market = new Market();
     }
 
     // Update is called once per frame
@@ -23,20 +28,11 @@ public class GameManager : MonoBehaviour
         GenerateIncome();
         timer += Time.deltaTime;
 
+
+
         // Hit ESC to close the game
         if(Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-    }
-
-    /// <summary>
-    /// Creates the stocks Dictionary and adds stocks to it
-    /// </summary>
-    void LoadStocks()
-    {
-        stocks = new Dictionary<string, Stock>();
-        stocks.Add("Dogecoin", new Stock("Dogecoin", 5.0f, 1, 0.02f));
-        stocks.Add("AMC", new Stock("AMC", 30.0f, 0, 0.5f));
-        stocks.Add("GME", new Stock("GME", 250.0f, 0, 2.5f));
     }
 
     /// <summary>
@@ -48,17 +44,23 @@ public class GameManager : MonoBehaviour
         multiplier = newMultiplier;
     }
 
+    public float CalcTimeSinceLastUpdate()
+    {
+        return 0;
+    }
+
     /// <summary>
     /// Adds money to the player every second, based on the shares owned
     /// </summary>
     void GenerateIncome()
     {
         if(timer > 1.0f) {
+            currentTime = System.DateTime.Now;
+            Debug.Log(currentTime);
+
             timer = 0.0f;
-            // Loops through each stock, adding the income generated based on the number of shares owned
-            foreach(string name in stocks.Keys) {
-                money += stocks[name].IncomePerShare * stocks[name].SharesOwned;
-            }
+
+            money += market.CalcMoney();
         }
     }
 }
