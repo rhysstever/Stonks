@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     //Store the current time whenever we generate income so we can calculate how much
     //To give the player in passive income when they come back.
-    System.DateTime currentTime;
+    string currentTime;
 
     // Start is called before the first frame update
     void Start()
@@ -55,12 +55,33 @@ public class GameManager : MonoBehaviour
     void GenerateIncome()
     {
         if(timer > 1.0f) {
-            currentTime = System.DateTime.Now;
-            Debug.Log(currentTime);
-
             timer = 0.0f;
 
             money += market.CalcMoney();
         }
+    }
+
+    /// <summary>
+    /// Triggers a Save whenever the app is closed.
+    /// </summary>
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+    }
+
+    void SaveGame()
+    {
+        currentTime = System.DateTime.UtcNow.ToString();
+
+        //Save the time and money
+        PlayerPrefs.SetString("lastTime", currentTime);
+        PlayerPrefs.SetFloat("money", money);
+
+        //Save individual stocks
+        foreach(KeyValuePair<string, Stock> stock in market.StockList)
+        {
+            PlayerPrefs.SetFloat(stock.Key + "Amount", stock.Value.SharesOwned);
+            PlayerPrefs.SetFloat(stock.Key + "Price", stock.Value.PricePerShare);
+        }      
     }
 }
