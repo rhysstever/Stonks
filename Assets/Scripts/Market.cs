@@ -61,10 +61,12 @@ public class Market
     public List<float> CompilePriceList(float newPricePoint)
     {
         graphValues.Enqueue(newPricePoint);
-        if(graphValues.Count > 8)
+        if(graphValues.Count > 9)
         {
             graphValues.Dequeue();
         }
+
+        Debug.Log(graphValues.Peek());
 
         return graphValues.ToList();
     }

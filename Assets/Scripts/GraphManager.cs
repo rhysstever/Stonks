@@ -21,7 +21,7 @@ public class GraphManager : MonoBehaviour
         
     }
 
-    private void CreateCircle(Vector2 anchoredPosition)
+    private GameObject CreateCircle(Vector2 anchoredPosition)
     {
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer.GetChild(1), false);
@@ -32,18 +32,39 @@ public class GraphManager : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(10, 10);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
+        return gameObject;
     }
 
     public void ShowGraph(List<float> valueList)
     {
+        float currentMin = float.MaxValue;
+        float currentMax = 0;
+
+        foreach(float f in valueList)
+        {
+            if (f > currentMax) currentMax = f;
+            if (f < currentMin) currentMin = f;
+        }
+
         float graphHeight = graphContainer.sizeDelta.y;
-        float xSize = 50f;
+        float xSize = 10f;
         float yMaximum = 100f;
-        for (int i = 0; i < valueList.Count; i++)
+
+        GameObject lastCircleGameObject = null;
+
+        for (int i = 1; i < valueList.Count; i++)
         {       
-            float xPosition = i * xSize;
-            float yPosition = (valueList[i] / yMaximum) * graphHeight;
-            CreateCircle(new Vector2(xPosition, yPosition));
+            float xPosition = (i * xSize);
+            
+            float m = (yMaximum) / (currentMax - currentMin);
+            float yPosition = m * valueList[i] - (m * currentMin);
+
+            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
+            if(lastCircleGameObject != null)
+            {
+                CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
+            }
+            lastCircleGameObject = circleGameObject;
         }
     }
 
@@ -53,5 +74,24 @@ public class GraphManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        foreach (Transform child in graphContainer.GetChild(2))
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
+    {
+        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
+        gameObject.transform.SetParent(graphContainer.GetChild(2), false);
+        gameObject.GetComponent<Image>().color = new Color(1, 1, 1.5f);
+        Vector2 dir = (dotPositionB - dotPositionA).normalized;
+        RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
+        float distance = Vector2.Distance(dotPositionA, dotPositionB);
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+        rectTransform.sizeDelta = new Vector2(10, 3f);
+        rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
+        rectTransform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
 }

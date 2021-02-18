@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
 
             graph.cleanupPrevious();
 
-            graph.ShowGraph(market.CompilePriceList(moneyGenerated));
+            graph.ShowGraph(market.CompilePriceList(money));
         }
     }
 
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
             {
                 market.SetStockAmount(stock.Key, PlayerPrefs.GetInt(stock.Key + "Amount"));
                 market.SetStockPrice(stock.Key, PlayerPrefs.GetFloat(stock.Key + "Price"));
+                Debug.Log("Stock Generated: " + stock.Key + " at price " + stock.Value.PricePerShare + " with " + stock.Value.SharesOwned + " shares owned.");
             }
 
             //Calculate the difference in time since last login to calculate passive money earned
