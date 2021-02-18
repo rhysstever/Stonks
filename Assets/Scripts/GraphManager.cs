@@ -84,14 +84,26 @@ public class GraphManager : MonoBehaviour
     {
         GameObject gameObject = new GameObject("dotConnection", typeof(Image));
         gameObject.transform.SetParent(graphContainer.GetChild(2), false);
-        gameObject.GetComponent<Image>().color = new Color(1, 1, 1.5f);
+
         Vector2 dir = (dotPositionB - dotPositionA).normalized;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         float distance = Vector2.Distance(dotPositionA, dotPositionB);
+
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.sizeDelta = new Vector2(10, 3f);
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if(angle >= 0)
+        {
+            gameObject.GetComponent<Image>().color = new Color(0, 1, 0, .5f);
+        }
+        else
+        {
+            gameObject.GetComponent<Image>().color = new Color(1, 0, 0, .5f);
+        }
+
         rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
-        rectTransform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        rectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
 }
