@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Market
 {
     Dictionary<string, Stock> stockList;
+    Queue<float> graphValues = new Queue<float>();
 
     public Dictionary<string, Stock> StockList { get { return this.stockList; } }
 
@@ -54,5 +56,21 @@ public class Market
             moneyAtTime += stock.Value.CalcTotalIncome();
         }
         return moneyAtTime;
+    }
+
+    public List<float> CompilePriceList(float newPricePoint)
+    {
+        graphValues.Enqueue(newPricePoint);
+        if(graphValues.Count > 8)
+        {
+            graphValues.Dequeue();
+        }
+
+        return graphValues.ToList();
+    }
+
+    public float CalcOfflineMoney(int seconds)
+    {
+        return CalcMoney() * seconds;
     }
 }

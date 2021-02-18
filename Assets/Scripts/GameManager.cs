@@ -9,16 +9,19 @@ public class GameManager : MonoBehaviour
     public int multiplier;
     float timer;
     Market market;
+    GraphManager graph;
 
     //Store the current time whenever we generate income so we can calculate how much
     //To give the player in passive income when they come back.
     string currentTimeString;
     string lastTimeString;
     System.DateTime currentTime;
+    System.DateTime lastTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        graph = GameObject.Find("Window_Graph").GetComponent<GraphManager>();
         market = new Market();
         LoadGame();
     }
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GenerateIncome();
+        GenerateAndDisplayIncome();
         timer += Time.deltaTime;
 
 
@@ -53,12 +56,18 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Adds money to the player every second, based on the shares owned
     /// </summary>
-    void GenerateIncome()
+    void GenerateAndDisplayIncome()
     {
         if(timer > 1.0f) {
             timer = 0.0f;
 
-            money += market.CalcMoney();
+            float moneyGenerated = market.CalcMoney();
+
+            money += moneyGenerated;
+
+            graph.cleanupPrevious();
+
+            graph.ShowGraph(market.CompilePriceList(moneyGenerated));
         }
     }
 
@@ -75,8 +84,12 @@ public class GameManager : MonoBehaviour
         //Check if there is a local save to load
         if (PlayerPrefs.HasKey("lastTime"))
         {
+            Debug.Log("Loading Game From Save");
+
             lastTimeString = PlayerPrefs.GetString("lastTime");
             money = PlayerPrefs.GetFloat("money");
+
+            Debug.Log("Player has $" + money + " before offline calculations.");
 
             foreach (KeyValuePair<string, Stock> stock in market.StockList)
             {
@@ -84,10 +97,26 @@ public class GameManager : MonoBehaviour
                 market.SetStockPrice(stock.Key, PlayerPrefs.GetFloat(stock.Key + "Price"));
             }
 
-            //TODO: Calculate the difference in time since last login to calculate passive money earned
+            //Calculate the difference in time since last login to calculate passive money earned
+            lastTime = System.DateTime.Parse(lastTimeString);
+            currentTime = System.DateTime.Now;
+            int offlineSeconds = (int)((currentTime - lastTime).TotalSeconds);
+
+            Debug.Log("Recorded Loaded Time: " + lastTimeString);
+            Debug.Log("Parsed Time: " + lastTime);
+            Debug.Log("Current Time: " + currentTime);
+            Debug.Log("Recorded Comparison Time: " + offlineSeconds);
+
+            float passiveMoney = market.CalcOfflineMoney(offlineSeconds);
+
+            Debug.Log("Generated $" + passiveMoney + " while offline.");
+
+            money += passiveMoney;
         }
         else
         {
+            Debug.Log("No save found, creating new game");
+
             money = 500.0f;
             multiplier = 1;
             market = new Market();
@@ -96,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     void SaveGame()
     {
-        currentTimeString = System.DateTime.UtcNow.ToString();
+        currentTimeString = System.DateTime.Now.ToString();
 
         //Save the time and money
         PlayerPrefs.SetString("lastTime", currentTimeString);
