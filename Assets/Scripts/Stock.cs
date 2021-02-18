@@ -14,8 +14,8 @@ public class Stock
 
 	#region Properties
 	public string Name { get { return name; } }
-	public float PricePerShare { get { return pricePerShare; } }
-	public int SharesOwned { get { return sharesOwned; } }
+	public float PricePerShare { get { return pricePerShare; } set { this.pricePerShare = value; } }
+	public int SharesOwned { get { return sharesOwned; } set { this.sharesOwned = value; } }
 	public float IncomePerShare { get { return incomePerShare; } }
 	public float TotalIncome { get { return totalIncome; } }
 	#endregion

@@ -12,14 +12,15 @@ public class GameManager : MonoBehaviour
 
     //Store the current time whenever we generate income so we can calculate how much
     //To give the player in passive income when they come back.
-    string currentTime;
+    string currentTimeString;
+    string lastTimeString;
+    System.DateTime currentTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        money = 500.0f;
-        multiplier = 1;
         market = new Market();
+        LoadGame();
     }
 
     // Update is called once per frame
@@ -69,18 +70,42 @@ public class GameManager : MonoBehaviour
         SaveGame();
     }
 
+    void LoadGame()
+    {
+        //Check if there is a local save to load
+        if (PlayerPrefs.HasKey("lastTime"))
+        {
+            lastTimeString = PlayerPrefs.GetString("lastTime");
+            money = PlayerPrefs.GetFloat("money");
+
+            foreach (KeyValuePair<string, Stock> stock in market.StockList)
+            {
+                market.SetStockAmount(stock.Key, PlayerPrefs.GetInt(stock.Key + "Amount"));
+                market.SetStockPrice(stock.Key, PlayerPrefs.GetFloat(stock.Key + "Price"));
+            }
+
+            //TODO: Calculate the difference in time since last login to calculate passive money earned
+        }
+        else
+        {
+            money = 500.0f;
+            multiplier = 1;
+            market = new Market();
+        }
+    }
+
     void SaveGame()
     {
-        currentTime = System.DateTime.UtcNow.ToString();
+        currentTimeString = System.DateTime.UtcNow.ToString();
 
         //Save the time and money
-        PlayerPrefs.SetString("lastTime", currentTime);
+        PlayerPrefs.SetString("lastTime", currentTimeString);
         PlayerPrefs.SetFloat("money", money);
 
         //Save individual stocks
         foreach(KeyValuePair<string, Stock> stock in market.StockList)
         {
-            PlayerPrefs.SetFloat(stock.Key + "Amount", stock.Value.SharesOwned);
+            PlayerPrefs.SetInt(stock.Key + "Amount", stock.Value.SharesOwned);
             PlayerPrefs.SetFloat(stock.Key + "Price", stock.Value.PricePerShare);
         }      
     }
