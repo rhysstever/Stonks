@@ -28,7 +28,7 @@ public class GraphManager : MonoBehaviour
         gameObject.GetComponent<Image>().sprite = circleSprite;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
-        rectTransform.localScale = new Vector3(0.5f, 1, 1);
+        rectTransform.localScale = new Vector3(0.25f, .5f, 1);
         rectTransform.sizeDelta = new Vector2(10, 10);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
@@ -49,13 +49,17 @@ public class GraphManager : MonoBehaviour
         float graphHeight = graphContainer.sizeDelta.y;
         float xSize = 10f;
         float yMaximum = 100f;
+        float xMaximum = 100f;
 
         GameObject lastCircleGameObject = null;
 
         for (int i = 1; i < valueList.Count; i++)
         {       
-            float xPosition = (i * xSize);
-            
+            float xPosition = i * xSize;
+
+            //float mx = (xMaximum) / valueList.Count;
+            //float xPosition = xMaximum - (mx * i);
+
             float m = (yMaximum) / (currentMax - currentMin);
             float yPosition = m * valueList[i] - (m * currentMin);
 
