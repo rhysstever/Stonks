@@ -85,7 +85,7 @@ public class Stock
 
 	public float CalcSharePrice()
     {
-		return this.pricePerShare + (Random.Range(-1.0f, 1.5f) * volatility);
+		return this.pricePerShare * (Random.Range(-1.0f, 1.5f) * volatility);
     }
 
 	/// <summary>

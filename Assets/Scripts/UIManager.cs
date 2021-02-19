@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public Canvas canvas;
+    GameManager gm;
     
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,9 @@ public class UIManager : MonoBehaviour
 
     void SetupUI()
     {
+        //Get the static GM instance
+        gm = GameManager.Instance;
+
         // Sets up multiplier buttons and sets their onClicks
         List<Button> multiplierButtons = new List<Button>();
         multiplierButtons.Add(canvas.transform.Find("Multiplier1").gameObject.GetComponent<Button>());
@@ -35,7 +39,7 @@ public class UIManager : MonoBehaviour
         }
         
         // Sets up onClicks for buying stocks
-        foreach(Stock stock in gameObject.GetComponent<GameManager>().stocks.Values) {
+        foreach(Stock stock in gm.market.StockList.Values) {
             string stockButtonName = "Button_" + stock.Name;
             canvas.transform.Find(stockButtonName).gameObject.GetComponent<Button>().onClick.AddListener(() =>
                 stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
@@ -46,7 +50,7 @@ public class UIManager : MonoBehaviour
     {
         canvas.transform.Find("Text_Money").gameObject.GetComponent<Text>().text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
 
-        foreach(Stock stock in gameObject.GetComponent<GameManager>().stocks.Values) {
+        foreach(Stock stock in gm.market.StockList.Values) {
             string stockTextName = "Text_" + stock.Name;
             canvas.transform.Find(stockTextName).gameObject.GetComponent<Text>().text = 
                 stock.Name + " Shares: " + stock.SharesOwned;
