@@ -10,6 +10,7 @@ public class Stock
 	private int sharesOwned;
 	private float incomePerShare;
 	private float totalIncome;
+	private float volatility;
 	#endregion
 
 	#region Properties
@@ -18,6 +19,7 @@ public class Stock
 	public int SharesOwned { get { return sharesOwned; } set { this.sharesOwned = value; } }
 	public float IncomePerShare { get { return incomePerShare; } }
 	public float TotalIncome { get { return totalIncome; } }
+	public float Volatility { get { return volatility; } }
 	#endregion
 
 	#region Constructor
@@ -35,6 +37,7 @@ public class Stock
 		sharesOwned = startingShares;
 		this.incomePerShare = CalcPerShareIncome();
 		totalIncome = CalcTotalIncome();
+		volatility = this.pricePerShare / (this.pricePerShare / 5);
 	}
 	#endregion
 	
@@ -77,8 +80,13 @@ public class Stock
 	/// <returns></returns>
 	public float CalcPerShareIncome()
 	{
-		return this.pricePerShare / 10;
+		return CalcSharePrice() / 10;
 	}
+
+	public float CalcSharePrice()
+    {
+		return this.pricePerShare + (Random.Range(-1.0f, 1.5f) * volatility);
+    }
 
 	/// <summary>
 	/// Overloaded method to buy 1 share
