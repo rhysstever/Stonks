@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public GameManager gm;
+    GameManager gm;
     public Canvas canvas;
     Text moneyText;
     List<Button> stockButtons;
