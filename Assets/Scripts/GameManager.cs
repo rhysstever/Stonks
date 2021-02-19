@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour
     public Market market;
     GraphManager graph;
 
-    private static GameManager _instance;
+    //private static GameManager _instance;
 
-    public static GameManager Instance { get { return _instance; } }
+    //public static GameManager Instance { get { return _instance; } }
 
     //Store the current time whenever we generate income so we can calculate how much
     //To give the player in passive income when they come back.

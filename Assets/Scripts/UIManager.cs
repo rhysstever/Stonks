@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public GameManager gm;
     public Canvas canvas;
-    GameManager gm;
-    
+    Text moneyText;
+    List<Button> stockButtons;
+    List<Text> stockTexts;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +25,26 @@ public class UIManager : MonoBehaviour
 
     void SetupUI()
     {
-        //Get the static GM instance
-        gm = GameManager.Instance;
+        // Get the static GM instance
+        //gm = GameManager.Instance;
+        gm = gameObject.GetComponent<GameManager>();
+
+        moneyText = canvas.transform.Find("Text_Money").gameObject.GetComponent<Text>();
+        stockButtons = new List<Button>();
+        stockTexts = new List<Text>();
+
+        foreach(Stock stock in gm.market.StockList.Values) {
+            // Finds all stock button objects, adds it to a list, and sets their onClicks
+            string stockButtonName = "Button_" + stock.Name;
+            GameObject newButton = canvas.transform.Find(stockButtonName).gameObject;
+            newButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
+            stockButtons.Add(newButton.GetComponent<Button>());
+
+            // Finds all stock text objects and adds it to a list
+            string stockTextName = "Text_" + stock.Name;
+            GameObject newText = canvas.transform.Find(stockTextName).gameObject;
+            stockTexts.Add(newText.GetComponent<Text>());
+        }
 
         // Sets up multiplier buttons and sets their onClicks
         List<Button> multiplierButtons = new List<Button>();
@@ -37,27 +58,27 @@ public class UIManager : MonoBehaviour
                 gameObject.GetComponent<GameManager>().ChangeMultipler(
                 int.Parse(multiplierButton.transform.GetChild(0).gameObject.GetComponent<Text>().text.Substring(1))));
         }
-        
-        // Sets up onClicks for buying stocks
-        foreach(Stock stock in gm.market.StockList.Values) {
-            string stockButtonName = "Button_" + stock.Name;
-            canvas.transform.Find(stockButtonName).gameObject.GetComponent<Button>().onClick.AddListener(() =>
-                stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
-        }
+        gm.ChangeMultipler(1);
     }
 
     void UpdateUI()
     {
-        canvas.transform.Find("Text_Money").gameObject.GetComponent<Text>().text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
+        // Update money display text
+        moneyText.text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
 
-        foreach(Stock stock in gm.market.StockList.Values) {
-            string stockTextName = "Text_" + stock.Name;
-            canvas.transform.Find(stockTextName).gameObject.GetComponent<Text>().text = 
-                stock.Name + " Shares: " + stock.SharesOwned;
+        // Update text for each stock
+        foreach(Text text in stockTexts) {
+            string stockName = text.gameObject.name.Substring(5);
+            Stock currentStock = gm.market.StockList[stockName];
+            text.text = currentStock.Name + " Shares: " + currentStock.SharesOwned;
+        }
 
-            string stockButtonName = "Button_" + stock.Name;
-            canvas.transform.Find(stockButtonName).gameObject.GetComponent<Button>().transform.GetChild(0).gameObject.GetComponent<Text>().text = 
-                "Buy: $" + (stock.PricePerShare * gameObject.GetComponent<GameManager>().multiplier);
+        // Update Button text
+        foreach(Button button in stockButtons) {
+            string stockName = button.gameObject.name.Substring(7);
+            Stock currentStock = gm.market.StockList[stockName];
+            button.transform.GetChild(0).gameObject.GetComponent<Text>().text = 
+                "Buy: $" + (currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multiplier);
         }
     }
 }
