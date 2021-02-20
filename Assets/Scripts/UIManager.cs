@@ -7,7 +7,10 @@ public class UIManager : MonoBehaviour
 {
     GameManager gm;
     public Canvas canvas;
+
+    [SerializeField]
     Text moneyText;
+
     List<Button> stockButtons;
     List<Text> stockTexts;
 
@@ -29,7 +32,6 @@ public class UIManager : MonoBehaviour
         //gm = GameManager.Instance;
         gm = gameObject.GetComponent<GameManager>();
 
-        moneyText = canvas.transform.Find("Text_Money").gameObject.GetComponent<Text>();
         stockButtons = new List<Button>();
         stockTexts = new List<Text>();
 
