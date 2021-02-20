@@ -35,12 +35,10 @@ public class GameManager : MonoBehaviour
         GenerateAndDisplayIncome();
         timer += Time.deltaTime;
 
-
-
         // Hit ESC to close the game
         if(Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-    }
+	}
 
     /// <summary>
     /// A helper method for changing the number of stocks you can buy with each click
