@@ -7,7 +7,13 @@ public class UIManager : MonoBehaviour
 {
     GameManager gm;
     public Canvas canvas;
+    
+    [SerializeField]
+    GameObject GameUIPanel;
+
+    [SerializeField]
     Text moneyText;
+
     List<Button> stockButtons;
     List<Text> stockTexts;
 
@@ -29,29 +35,28 @@ public class UIManager : MonoBehaviour
         //gm = GameManager.Instance;
         gm = gameObject.GetComponent<GameManager>();
 
-        moneyText = canvas.transform.Find("Text_Money").gameObject.GetComponent<Text>();
         stockButtons = new List<Button>();
         stockTexts = new List<Text>();
 
         foreach(Stock stock in gm.market.StockList.Values) {
             // Finds all stock button objects, adds it to a list, and sets their onClicks
             string stockButtonName = "Button_" + stock.Name;
-            GameObject newButton = canvas.transform.Find(stockButtonName).gameObject;
+            GameObject newButton = GameUIPanel.transform.Find(stockButtonName).gameObject;
             newButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
             stockButtons.Add(newButton.GetComponent<Button>());
 
             // Finds all stock text objects and adds it to a list
             string stockTextName = "Text_" + stock.Name;
-            GameObject newText = canvas.transform.Find(stockTextName).gameObject;
+            GameObject newText = GameUIPanel.transform.Find(stockTextName).gameObject;
             stockTexts.Add(newText.GetComponent<Text>());
         }
 
         // Sets up multiplier buttons and sets their onClicks
         List<Button> multiplierButtons = new List<Button>();
-        multiplierButtons.Add(canvas.transform.Find("Multiplier1").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(canvas.transform.Find("Multiplier5").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(canvas.transform.Find("Multiplier10").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(canvas.transform.Find("Multiplier25").gameObject.GetComponent<Button>());
+        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier1").gameObject.GetComponent<Button>());
+        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier5").gameObject.GetComponent<Button>());
+        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier10").gameObject.GetComponent<Button>());
+        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier25").gameObject.GetComponent<Button>());
 
         foreach(Button multiplierButton in multiplierButtons) {
             multiplierButton.onClick.AddListener(() =>
