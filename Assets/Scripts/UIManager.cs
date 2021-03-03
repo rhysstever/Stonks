@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,7 +13,19 @@ public class UIManager : MonoBehaviour
     GameObject GameUIPanel;
 
     [SerializeField]
-    Text moneyText;
+    TextMeshProUGUI moneyText;
+
+    [SerializeField]
+    GameObject multiply1;
+
+    [SerializeField]
+    GameObject multiply10;
+
+    [SerializeField]
+    GameObject multiply100;
+
+    [SerializeField]
+    GameObject maxBuy;
 
     List<Button> stockButtons;
     List<Text> stockTexts;
@@ -53,17 +66,31 @@ public class UIManager : MonoBehaviour
 
         // Sets up multiplier buttons and sets their onClicks
         List<Button> multiplierButtons = new List<Button>();
-        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier1").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier5").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier10").gameObject.GetComponent<Button>());
-        multiplierButtons.Add(GameUIPanel.transform.Find("Multiplier25").gameObject.GetComponent<Button>());
+        multiplierButtons.Add(multiply1.gameObject.GetComponent<Button>());
+        multiplierButtons.Add(multiply10.gameObject.GetComponent<Button>());
+        multiplierButtons.Add(multiply100.gameObject.GetComponent<Button>());
+        multiplierButtons.Add(maxBuy.gameObject.GetComponent<Button>());
 
-        foreach(Button multiplierButton in multiplierButtons) {
-            multiplierButton.onClick.AddListener(() =>
-                gameObject.GetComponent<GameManager>().ChangeMultipler(
-                int.Parse(multiplierButton.transform.GetChild(0).gameObject.GetComponent<Text>().text.Substring(1))));
-        }
+        multiply1.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<GameManager>().ChangeMultipler(1));
+
+        multiply10.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<GameManager>().ChangeMultipler(10));
+
+        multiply100.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<GameManager>().ChangeMultipler(100));
+
+        maxBuy.GetComponent<Button>().onClick.AddListener(() =>
+                Debug.LogError("Will attach this later."));
+
         gm.ChangeMultipler(1);
+        multiply1.GetComponent<Button>().Select();
+    }
+
+    // Update the multiplied costs on each stocks' buy button
+    public void UpdateMultiplicity()
+    {
+
     }
 
     void UpdateUI()
