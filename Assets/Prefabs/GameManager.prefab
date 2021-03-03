@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1838361082791998378}
   - component: {fileID: 1838361082791998379}
+  - component: {fileID: 1802486570}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,3 +46,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   money: 0
   multiplier: 0
+  graph: {fileID: 0}
+--- !u!114 &1802486570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838361082791998380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5035c62d527491a4083db82bbd8d2419, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  GameUIPanel: {fileID: 0}
+  moneyText: {fileID: 0}
+  multiply1: {fileID: 0}
+  multiply10: {fileID: 0}
+  multiply100: {fileID: 0}
+  maxBuy: {fileID: 0}
+  stockDisplayPrefab: {fileID: 5008160688471955066, guid: 3f3fbd4d90469204d9404c6bb9da74df, type: 3}
+  stockDisplays: {fileID: 0}
