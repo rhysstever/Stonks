@@ -80,13 +80,13 @@ public class UIManager : MonoBehaviour
         foreach(Stock stock in gm.market.StockList.Values) {
             GameObject newStock = Instantiate(stockDisplayPrefab);
             newStock.transform.SetParent(stockDisplays.transform);
-            newStock.name = "Button_" + stock.Name;
+            newStock.name = stock.Name;
             GameObject buyButton = newStock.transform.Find("BUY_BUTTON").gameObject;
             buyButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
             stockButtons.Add(buyButton.GetComponent<Button>());
 
             // Finds all stock text objects and adds it to a list
-            string stockTextName = "Text_" + stock.Name;
+            string stockTextName = stock.Name;
             GameObject newText = newStock.transform.Find("STOCK_NAME").gameObject;
             TextMeshProUGUI tmpAsset = newText.GetComponent<TextMeshProUGUI>();
             newText.name = stockTextName;
@@ -129,19 +129,13 @@ public class UIManager : MonoBehaviour
         // Update money display text
         moneyText.text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
 
-        // Update text for each stock
-        foreach(TextMeshProUGUI text in stockTexts) {
-            string stockName = text.gameObject.name.Substring(5);
-            Stock currentStock = gm.market.StockList[stockName];
-            text.text = currentStock.Name + " - Shares: " + currentStock.SharesOwned;
+        for(int i = 0; i<gm.market.StockList.Values.Count; i++ )
+        {
+            Stock currentStock = gm.market.StockList[stockTexts[i].gameObject.name];
+            stockTexts[i].text = currentStock.Name + " - Shares: " + currentStock.SharesOwned;
+            stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+                "Buy " + gameObject.GetComponent<GameManager>().multiplier + " shares for $" + (currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multiplier);
         }
 
-        // Update Button text
-        foreach(Button button in stockButtons) {
-            string stockName = button.gameObject.name.Substring(7);
-            Stock currentStock = gm.market.StockList[stockName];
-            button.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
-                "Buy " + gameObject.GetComponent<GameManager>().multiplier + "shares for $" + (currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multiplier);
-        }
     }
 }
