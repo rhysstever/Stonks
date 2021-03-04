@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
 
             graph.cleanupPrevious();
 
-            graph.ShowGraph(market.CompilePriceList(money));
+            graph.ShowGraph(market.StockList[market.CurrentActiveStock].LastPrices.ToList());
 
             Debug.Log(money);
         }
@@ -152,11 +154,17 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("Generated $" + passiveMoney + " while offline.");
 
+            string passiveGenString = "You earned $" + passiveMoney.ToString("0.00") + " while away!";
+            GameObject.Find("Launch Screen").transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = passiveGenString;
+
             money += passiveMoney;
         }
         else
         {
             Debug.Log("No save found, creating new game");
+
+            Transform t = GameObject.Find("Launch Screen").transform.GetChild(3);
+            t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
 
             money = 500.0f;
             multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -171,7 +179,7 @@ public class GameManager : MonoBehaviour
 
         //Save the time and money
         PlayerPrefs.SetString("lastTime", currentTimeString);
-        PlayerPrefs.SetFloat("money", 10000);
+        PlayerPrefs.SetFloat("money", money);
 
         //Save individual stocks
         foreach(KeyValuePair<string, Stock> stock in market.StockList)

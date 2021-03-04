@@ -7,19 +7,22 @@ public class Market
 {
     Dictionary<string, Stock> stockList;
     Queue<float> graphValues = new Queue<float>();
+    private string currentActiveStock;
 
     public Dictionary<string, Stock> StockList { get { return this.stockList; } }
+    public string CurrentActiveStock { get { return currentActiveStock; } }
 
     public Market()
     {
         InitMarket();
+        currentActiveStock = "DOGE";
     }
 
     public void InitMarket()
     {
         stockList = new Dictionary<string, Stock>();
 
-        stockList.Add("DOGE", new Stock("DOGE", 0.05f, 50));
+        stockList.Add("DOGE", new Stock("DOGE", 0.05f, 0));
         stockList.Add("AMC", new Stock("AMC", 3.00f, 0));
         stockList.Add("NOK", new Stock("NOK", 4.20f, 0));
         stockList.Add("BB", new Stock("BB", 10.95f, 0));
@@ -35,7 +38,7 @@ public class Market
     /// <param name="newPrice"></param>
     public void SetStockPrice(string stockName, float newPrice)
     {
-        stockList[stockName].PricePerShare = newPrice;
+        stockList[stockName].SetPriceForGraph(newPrice);
     }
 
     /// <summary>
