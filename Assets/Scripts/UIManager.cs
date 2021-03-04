@@ -82,7 +82,11 @@ public class UIManager : MonoBehaviour
             newStock.transform.SetParent(stockDisplays.transform);
             newStock.name = stock.Name;
             GameObject buyButton = newStock.transform.Find("BUY_BUTTON").gameObject;
-            buyButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multipliers[0]));
+            buyButton.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                stock.BuyStock(gameObject.GetComponent<GameManager>().multipliers[0]);
+                gm.market.CurrentActiveStock = stock.Name;
+            });
             stockButtons.Add(buyButton.GetComponent<Button>());
 
             // Finds all stock text objects and adds it to a list
@@ -132,6 +136,10 @@ public class UIManager : MonoBehaviour
         {
             Stock currentStock = gm.market.StockList[stockTexts[i].gameObject.name];
             stockTexts[i].text = currentStock.Name + " - Shares: " + currentStock.SharesOwned;
+
+            // Shows the subtext of the current price of a single stock
+            string singleStockValue = "Current price for 1 share: " + currentStock.PricePerShare.ToString("C");
+            stockButtons[i].transform.parent.GetChild(4).gameObject.GetComponent<TextMeshProUGUI>().text = singleStockValue;
 
             // Calculates the total price of the purchase, based on the multiplier, then displays it in the currency format
             float price = currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multipliers[i];
