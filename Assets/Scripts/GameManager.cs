@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public int multiplier;
     float timer;
     public Market market;
+
+    [SerializeField]
     GraphManager graph;
 
     //private static GameManager _instance;
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        graph = GameObject.Find("Window_Graph").GetComponent<GraphManager>();
+        graph = graph.GetComponent<GraphManager>();
         market = new Market();
         LoadGame();
     }
