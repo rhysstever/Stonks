@@ -82,7 +82,7 @@ public class UIManager : MonoBehaviour
             newStock.transform.SetParent(stockDisplays.transform);
             newStock.name = stock.Name;
             GameObject buyButton = newStock.transform.Find("BUY_BUTTON").gameObject;
-            buyButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multiplier));
+            buyButton.GetComponent<Button>().onClick.AddListener(() => stock.BuyStock(gameObject.GetComponent<GameManager>().multipliers[0]));
             stockButtons.Add(buyButton.GetComponent<Button>());
 
             // Finds all stock text objects and adds it to a list
@@ -91,7 +91,6 @@ public class UIManager : MonoBehaviour
             TextMeshProUGUI tmpAsset = newText.GetComponent<TextMeshProUGUI>();
             newText.name = stockTextName;
             stockTexts.Add(tmpAsset);
-
         }
 
 
@@ -112,7 +111,7 @@ public class UIManager : MonoBehaviour
                 gameObject.GetComponent<GameManager>().ChangeMultipler(100));
 
         maxBuy.GetComponent<Button>().onClick.AddListener(() =>
-                Debug.LogError("Will attach this later."));
+                gameObject.GetComponent<GameManager>().CalculateMaxMultiplier());
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
@@ -129,13 +128,15 @@ public class UIManager : MonoBehaviour
         // Update money display text
         moneyText.text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
 
-        for(int i = 0; i<gm.market.StockList.Values.Count; i++ )
+        for(int i = 0; i < gm.market.StockList.Values.Count; i++ )
         {
             Stock currentStock = gm.market.StockList[stockTexts[i].gameObject.name];
             stockTexts[i].text = currentStock.Name + " - Shares: " + currentStock.SharesOwned;
-            stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
-                "Buy " + gameObject.GetComponent<GameManager>().multiplier + " shares for $" + (currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multiplier);
-        }
 
+            // Calculates the total price of the purchase, based on the multiplier, then displays it in the currency format
+            float price = currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multipliers[i];
+            stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+                "Buy " + gameObject.GetComponent<GameManager>().multipliers[i] + " shares for " + price.ToString("C");
+        }
     }
 }

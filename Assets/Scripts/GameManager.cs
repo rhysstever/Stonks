@@ -7,7 +7,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
     public float money;
-    public int multiplier;
+    public int[] multipliers;
     float timer;
     public Market market;
 
@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         graph = graph.GetComponent<GraphManager>();
         market = new Market();
         LoadGame();
@@ -42,15 +43,49 @@ public class GameManager : MonoBehaviour
         // Hit ESC to close the game
         if(Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-	}
+    }
+
+
+    public int[] CalculateMaxMultiplier()
+    {
+        int[] newMultipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
+
+        // If the player does not have any money, there's no need to calculate the max number of shares they can buy
+        if(money <= 0.0f)
+            return newMultipliers;
+
+        foreach(Stock stock in market.StockList.Values) {
+            
+                
+		}
+
+        return newMultipliers;
+    }
 
     /// <summary>
     /// A helper method for changing the number of stocks you can buy with each click
+    /// Sets each multiplier value to the same integer
     /// </summary>
-    /// <param name="newMultiplier"></param>
+    /// <param name="newMultiplier">The new multiplier for every stock</param>
     public void ChangeMultipler(int newMultiplier)
     {
-        multiplier = newMultiplier;
+        for(int i = 0; i < multipliers.Length; i++)
+            multipliers[i] = newMultiplier;
+    }
+
+    /// <summary>
+    /// A helper method for changing the number of stocks you can buy with each click
+    /// Sets each multiplier value to the integer of the given array
+    /// </summary>
+    /// <param name="newMultipliers">The new multiplier for every stock</param>
+    public void ChangeMultipler(int[] newMultipliers)
+    {
+        // If there aren't the right number of integers in the list, the function ends
+        if(newMultipliers.Length != multipliers.Length)
+            return;
+
+        for(int i = 0; i < multipliers.Length; i++)
+            multipliers[i] = newMultipliers[i];
     }
 
     public float CalcTimeSinceLastUpdate()
@@ -132,7 +167,8 @@ public class GameManager : MonoBehaviour
             t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
 
             money = 500.0f;
-            multiplier = 1;
+            multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
+            ChangeMultipler(1);
             market = new Market();
         }
     }
