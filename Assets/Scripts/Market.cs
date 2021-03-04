@@ -10,7 +10,7 @@ public class Market
     private string currentActiveStock;
 
     public Dictionary<string, Stock> StockList { get { return this.stockList; } }
-    public string CurrentActiveStock { get { return currentActiveStock; } }
+    public string CurrentActiveStock { get { return currentActiveStock; } set { this.currentActiveStock = value; } }
 
     public Market()
     {
