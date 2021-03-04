@@ -11,6 +11,7 @@ public class Stock
 	private float incomePerShare;
 	private float totalIncome;
 	private float volatility;
+	private Queue<float> lastPrices;
 	#endregion
 
 	#region Properties
@@ -20,6 +21,7 @@ public class Stock
 	public float IncomePerShare { get { return incomePerShare; } }
 	public float TotalIncome { get { return totalIncome; } }
 	public float Volatility { get { return volatility; } }
+	public Queue<float> LastPrices { get { return this.lastPrices; } }
 	#endregion
 
 	#region Constructor
@@ -37,7 +39,12 @@ public class Stock
 		sharesOwned = startingShares;
 		this.incomePerShare = CalcPerShareIncome();
 		totalIncome = CalcTotalIncome();
-		volatility = this.pricePerShare / (this.pricePerShare / 5);
+		volatility = 2;
+		lastPrices = new Queue<float>();
+		for(int i = 0; i < 10; i++)
+        {
+			lastPrices.Enqueue(pricePerShare);
+        }
 	}
 	#endregion
 	
@@ -66,6 +73,15 @@ public class Stock
 	}
 
 	/// <summary>
+	/// Sets the stock price so the graph can see it
+	/// </summary>
+	/// <param name="price"></param>
+	public void SetPriceForGraph(float price)
+    {
+		pricePerShare = price;
+    }
+
+	/// <summary>
 	/// Calculates total Income from this stock
 	/// </summary>
 	/// <returns></returns>
@@ -80,12 +96,21 @@ public class Stock
 	/// <returns></returns>
 	public float CalcPerShareIncome()
 	{
-		return CalcSharePrice() / 10;
+		return CalcSharePrice() / 100;
 	}
 
 	public float CalcSharePrice()
     {
-		return this.pricePerShare * (Random.Range(-1.0f, 1.5f) * volatility);
+		this.pricePerShare += (Random.Range(-1.0f, 1.1f) * volatility) * (this.pricePerShare / 10);
+		if(lastPrices != null)
+        {
+			lastPrices.Enqueue(pricePerShare);
+			if (lastPrices.Count >= 15)
+			{
+				lastPrices.Dequeue();
+			}
+		}		
+		return this.pricePerShare;
     }
 
 	/// <summary>
