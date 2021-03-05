@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GraphManager graph;
 
+    [SerializeField]
+    GameObject launchScreen;
+
     //private static GameManager _instance;
 
     //public static GameManager Instance { get { return _instance; } }
@@ -170,13 +173,15 @@ public class GameManager : MonoBehaviour
     public void RestartGame(){
             Debug.Log("Creating new game");
 
-            Transform t = GameObject.Find("Launch Screen").transform.GetChild(3);
+            Transform t = launchScreen.transform.GetChild(3);
             t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
 
             money = 500.0f;
             multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
             ChangeMultipler(1);
             market = new Market();
+            
+        gameObject.GetComponent<UIManager>().ResetUI();
     }
     void SaveGame()
     {
