@@ -161,7 +161,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No save found, creating new game");
+            Debug.Log("No save found!");
+
+            RestartGame();
+        }
+    }
+
+    public void RestartGame(){
+            Debug.Log("Creating new game");
 
             Transform t = GameObject.Find("Launch Screen").transform.GetChild(3);
             t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
@@ -170,9 +177,7 @@ public class GameManager : MonoBehaviour
             multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
             ChangeMultipler(1);
             market = new Market();
-        }
     }
-
     void SaveGame()
     {
         currentTimeString = System.DateTime.Now.ToString();
