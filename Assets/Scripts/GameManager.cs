@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Generated $" + passiveMoney + " while offline.");
 
             string passiveGenString = "You earned $" + passiveMoney.ToString("0.00") + " while away!";
-            GameObject.Find("Launch Screen").transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = passiveGenString;
+            launchScreen.transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = passiveGenString;
 
             money += passiveMoney;
         }
