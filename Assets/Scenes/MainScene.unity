@@ -2325,6 +2325,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704742436}
   m_CullTransparentMesh: 1
+--- !u!1 &880108337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1838361082791998380, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+  m_PrefabInstance: {fileID: 1011425764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &880108338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880108337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fc9cb44fd7fa74b81d12c1dba52215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTitle: 
+  buyOutCost: 0
 --- !u!1 &887911894
 GameObject:
   m_ObjectHideFlags: 0
@@ -2653,6 +2672,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 102772298}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: payRate
+      value: 
+      objectReference: {fileID: 172871701}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: moneyText
       value: 
       objectReference: {fileID: 199859900}
@@ -2661,9 +2684,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1629858022}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: buyOutCost
+      value: 
+      objectReference: {fileID: 180548276}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: multiply10
       value: 
       objectReference: {fileID: 81024885}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: workButton
+      value: 
+      objectReference: {fileID: 1969892942}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: GameUIPanel
       value: 
@@ -2676,6 +2707,14 @@ PrefabInstance:
       propertyPath: stockDisplays
       value: 
       objectReference: {fileID: 433529377}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: clicksRemaining
+      value: 
+      objectReference: {fileID: 891773873}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentPosition
+      value: 
+      objectReference: {fileID: 1045302573}
     - target: {fileID: 1838361082791998378, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4424,7 +4463,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1838361082791998379, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
   m_PrefabInstance: {fileID: 1011425764}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 880108337}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fa9d64e00ce22845bd3dac851624b65, type: 3}

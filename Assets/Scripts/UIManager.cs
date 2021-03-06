@@ -15,8 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI moneyText;
 
-
-    //Multiplier Buttons
+    // Multiplier Buttons
     [SerializeField]
     GameObject multiply1;
 
@@ -37,6 +36,23 @@ public class UIManager : MonoBehaviour
 
     List<Button> stockButtons;
     List<TextMeshProUGUI> stockTexts;
+
+    // Work Click Button
+    [SerializeField]
+    GameObject workButton;
+
+    // Work Display Text
+    [SerializeField]
+    TextMeshProUGUI currentPosition;
+
+    [SerializeField]
+    TextMeshProUGUI payRate;
+
+    [SerializeField]
+    TextMeshProUGUI clicksRemaining;
+
+    [SerializeField]
+    TextMeshProUGUI buyOutCost;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +92,9 @@ public class UIManager : MonoBehaviour
 
         maxBuy.GetComponent<Button>().onClick.AddListener(() =>
                 gameObject.GetComponent<GameManager>().CalculateMaxMultiplier());
+
+        workButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<WorkManager>().WorkJob());
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
@@ -117,10 +136,11 @@ public class UIManager : MonoBehaviour
             stockTexts.Add(tmpAsset);
         }
     }
+
     void UpdateUI()
     {
         // Update money display text
-        moneyText.text = "$" + gameObject.GetComponent<GameManager>().money.ToString("0.00");
+        moneyText.text = gameObject.GetComponent<GameManager>().money.ToString("C");
 
         for(int i = 0; i < gm.market.StockList.Values.Count; i++ )
         {
@@ -136,5 +156,11 @@ public class UIManager : MonoBehaviour
             stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
                 "Buy " + gameObject.GetComponent<GameManager>().multipliers[i] + " shares for " + price.ToString("C");
         }
+
+        // Update job display text
+        currentPosition.text = "Current Position: " + gm.gameObject.GetComponent<WorkManager>().currentJob.PositionTitle;
+        payRate.text = "Pay Rate: " + gm.gameObject.GetComponent<WorkManager>().currentJob.HourlyPay.ToString("C");
+        clicksRemaining.text = "Clicks Remaining: " + (gm.gameObject.GetComponent<WorkManager>().currentJob.ClicksToPromotion - gm.gameObject.GetComponent<WorkManager>().currentJob.CurrentClicks);
+        buyOutCost.text = "Buyout Cost: " + gm.gameObject.GetComponent<WorkManager>().currentJob.ClickBuyOutCost.ToString("C");
     }
 }
