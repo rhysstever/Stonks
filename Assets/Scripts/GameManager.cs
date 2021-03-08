@@ -48,7 +48,11 @@ public class GameManager : MonoBehaviour
             Application.Quit();
     }
 
-
+    /// <summary>
+    /// Calculates the maximum number of stocks the player can buy of each stock
+    /// </summary>
+    /// <returns>Returns an array of integers where each integer is the maximum number 
+    /// of stocks the player can buy with their current money amount</returns>
     public int[] CalculateMaxMultiplier()
     {
         int[] newMultipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -57,9 +61,10 @@ public class GameManager : MonoBehaviour
         if(money <= 0.0f)
             return newMultipliers;
 
+        int stockCount = 0;
         foreach(Stock stock in market.StockList.Values) {
-            
-                
+            newMultipliers[stockCount] = (int)(money / stock.PricePerShare);
+            stockCount++;
 		}
 
         return newMultipliers;
@@ -171,15 +176,16 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame(){
-            Debug.Log("Creating new game");
+        Debug.Log("Creating new game");
 
-            Transform t = launchScreen.transform.GetChild(3);
-            t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
+        Transform t = launchScreen.transform.GetChild(3);
+        t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
 
-            money = 500.0f;
-            multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
-            ChangeMultipler(1);
-            market = new Market();
+        money = 500.0f;
+        multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
+        ChangeMultipler(multipliers);
+        gameObject.GetComponent<WorkManager>().ResetJob();
+        market = new Market();
             
         gameObject.GetComponent<UIManager>().ResetUI();
     }
