@@ -166,6 +166,11 @@ public class GameManager : MonoBehaviour
             launchScreen.transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = passiveGenString;
 
             money += passiveMoney;
+
+            // Load Job Data
+            string jobName = PlayerPrefs.GetString("currentPosition");
+            int currentClicks = PlayerPrefs.GetInt("currentClicks");
+            gameObject.GetComponent<WorkManager>().SetJob(jobName, currentClicks);
         }
         else
         {
@@ -202,6 +207,10 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(stock.Key + "Amount", stock.Value.SharesOwned);
             PlayerPrefs.SetFloat(stock.Key + "Price", stock.Value.PricePerShare);
-        }      
+        }
+
+        // Save job data
+        PlayerPrefs.SetString("currentPosition", gameObject.GetComponent<WorkManager>().currentJob.PositionTitle);
+        PlayerPrefs.SetInt("currentClicks", gameObject.GetComponent<WorkManager>().currentClicks);
     }
 }
