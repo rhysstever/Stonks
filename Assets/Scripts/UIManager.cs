@@ -155,13 +155,14 @@ public class UIManager : MonoBehaviour
             // Calculates the total price of the purchase, based on the multiplier, then displays it in the currency format
             float price = currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multipliers[i];
             stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
-                "Buy " + gameObject.GetComponent<GameManager>().multipliers[i] + " shares for " + price.ToString("C");
+                "Buy " + gm.multipliers[i] + " shares for " + price.ToString("C");
         }
 
         // Update job display text
-        currentPosition.text = "Current Position: " + gm.gameObject.GetComponent<WorkManager>().currentJob.PositionTitle;
-        payRate.text = "Pay Rate: " + gm.gameObject.GetComponent<WorkManager>().currentJob.HourlyPay.ToString("C");
-        clicksRemaining.text = "Clicks Remaining: " + (gm.gameObject.GetComponent<WorkManager>().clicksRemaining);
-        buyOutCost.text = "Buyout Cost: " + gm.gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
+        currentPosition.text = "Current Position: " + gameObject.GetComponent<WorkManager>().currentJob.PositionTitle;
+        payRate.text = "Pay Rate: " + gameObject.GetComponent<WorkManager>().currentJob.HourlyPay.ToString("C");
+        int clicksRemainingCount = gameObject.GetComponent<WorkManager>().currentJob.ClicksToPromotion - gameObject.GetComponent<WorkManager>().currentClicks;
+        clicksRemaining.text = "Clicks Remaining: " + clicksRemainingCount;
+        buyOutCost.text = "Buyout Cost: " + gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
     }
 }
