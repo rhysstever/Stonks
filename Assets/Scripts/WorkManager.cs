@@ -5,9 +5,8 @@ using UnityEngine;
 public class WorkManager : MonoBehaviour
 {
     public JobPosition currentJob;
-    public string currentTitle;
-    public float buyOutCost;
-    private int clicksRemaining;
+    public float buyoutCost;
+    public int clicksRemaining;
     
     // Start is called before the first frame update
     void Start()
@@ -20,19 +19,18 @@ public class WorkManager : MonoBehaviour
     {
         CheckForPromotion();
 
-        currentTitle = currentJob.PositionTitle;
         clicksRemaining = currentJob.ClicksToPromotion - currentJob.CurrentClicks;
-        buyOutCost = clicksRemaining * currentJob.ClickBuyOutCost;
+        buyoutCost = clicksRemaining * currentJob.PerClickBuyoutCost;
     }
-
+    
     void CreatePositions()
 	{
-        JobPosition job5 = new JobPosition("CEO",              100000.00f, 0, 1000000, 20000.0f, null);
-        JobPosition job4 = new JobPosition("Board Member",      15000.00f, 0,  100000,  3000.0f, job5);
-        JobPosition job3 = new JobPosition("Regional Manager",   1000.00f, 0,   50000,   100.0f, job4);
-        JobPosition job2 = new JobPosition("Franchisee",          250.00f, 0,   10000,    30.0f, job3);
-        JobPosition job1 = new JobPosition("Manager",              25.00f, 0,    1000,     5.0f, job2);
-        JobPosition job0 = new JobPosition("Frycook",               7.25f, 0,     100,     1.5f, job1);
+        JobPosition job5 = new JobPosition("CEO",              100000.00f, 0, 1000000, 200000.0f, null);
+        JobPosition job4 = new JobPosition("Board Member",      15000.00f, 0,  100000,  30000.0f, job5);
+        JobPosition job3 = new JobPosition("Regional Manager",   1000.00f, 0,   50000,   2500.0f, job4);
+        JobPosition job2 = new JobPosition("Franchisee",          250.00f, 0,   10000,    300.0f, job3);
+        JobPosition job1 = new JobPosition("Manager",              25.00f, 0,    1000,     50.0f, job2);
+        JobPosition job0 = new JobPosition("Frycook",               7.25f, 0,     100,     15.0f, job1);
         
         currentJob = job0;
 	}
@@ -44,6 +42,11 @@ public class WorkManager : MonoBehaviour
     {
         gameObject.GetComponent<GameManager>().money += currentJob.HourlyPay;
         currentJob.AddClicks(1);
+    }
+
+    public void ResetJob()
+	{
+        CreatePositions();
     }
 
     /// <summary>
@@ -59,10 +62,10 @@ public class WorkManager : MonoBehaviour
     /// <summary>
     /// If the player has enough money, adds the remaining number of clicks to the click count
     /// </summary>
-    void PromotionBuyOut()
+    public void PromotionBuyOut()
 	{
-        if(gameObject.GetComponent<GameManager>().money >= buyOutCost) {
-            gameObject.GetComponent<GameManager>().money -= buyOutCost;
+        if(gameObject.GetComponent<GameManager>().money >= buyoutCost) {
+            gameObject.GetComponent<GameManager>().money -= buyoutCost;
             currentJob.AddClicks(clicksRemaining);
         }
     }

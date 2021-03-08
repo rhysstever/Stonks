@@ -8,7 +8,7 @@ public class JobPosition
 	private float hourlyPay;
 	private int currentClicks;
 	private int clicksToPromotion;
-	private float clickBuyOutCost;
+	private float perClickBuyoutCost;
 	private JobPosition nextPosition;
 	#endregion
 
@@ -17,7 +17,7 @@ public class JobPosition
 	public float HourlyPay { get { return hourlyPay; } }
 	public int CurrentClicks { get { return currentClicks; } }
 	public int ClicksToPromotion { get { return clicksToPromotion; } }
-	public float ClickBuyOutCost { get { return clickBuyOutCost; } }
+	public float PerClickBuyoutCost { get { return perClickBuyoutCost; } }
 	public JobPosition NextPosition { get { return nextPosition; } }
 	#endregion
 
@@ -37,7 +37,7 @@ public class JobPosition
 		this.hourlyPay = hourlyPay;
 		this.currentClicks = currentClicks;
 		this.clicksToPromotion = clicksToPromotion;
-		this.clickBuyOutCost = clickBuyOutCost;
+		this.perClickBuyoutCost = clickBuyOutCost;
 		this.nextPosition = nextPosition;
 	}
 	#endregion

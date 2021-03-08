@@ -91,7 +91,8 @@ public class UIManager : MonoBehaviour
                 gameObject.GetComponent<GameManager>().ChangeMultipler(100));
 
         maxBuy.GetComponent<Button>().onClick.AddListener(() =>
-                gameObject.GetComponent<GameManager>().CalculateMaxMultiplier());
+                gameObject.GetComponent<GameManager>().ChangeMultipler(
+                    gameObject.GetComponent<GameManager>().CalculateMaxMultiplier()));
 
         workButton.GetComponent<Button>().onClick.AddListener(() =>
                 gameObject.GetComponent<WorkManager>().WorkJob());
@@ -160,7 +161,7 @@ public class UIManager : MonoBehaviour
         // Update job display text
         currentPosition.text = "Current Position: " + gm.gameObject.GetComponent<WorkManager>().currentJob.PositionTitle;
         payRate.text = "Pay Rate: " + gm.gameObject.GetComponent<WorkManager>().currentJob.HourlyPay.ToString("C");
-        clicksRemaining.text = "Clicks Remaining: " + (gm.gameObject.GetComponent<WorkManager>().currentJob.ClicksToPromotion - gm.gameObject.GetComponent<WorkManager>().currentJob.CurrentClicks);
-        buyOutCost.text = "Buyout Cost: " + gm.gameObject.GetComponent<WorkManager>().currentJob.ClickBuyOutCost.ToString("C");
+        clicksRemaining.text = "Clicks Remaining: " + (gm.gameObject.GetComponent<WorkManager>().clicksRemaining);
+        buyOutCost.text = "Buyout Cost: " + gm.gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
     }
 }
