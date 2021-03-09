@@ -14,9 +14,9 @@ public class WorkManager : MonoBehaviour
     {
         CreatePositions();
 
-        if(currentJob == null)
-            currentJob = startingJob;
-    }
+		if(currentJob == null)
+			currentJob = startingJob;
+	}
 
     // Update is called once per frame
     void Update()
@@ -40,8 +40,12 @@ public class WorkManager : MonoBehaviour
     /// </summary>
     public void WorkJob()
     {
-        gameObject.GetComponent<GameManager>().money += currentJob.HourlyPay;
-        AddClicks(1);
+        int clickWeight = gameObject.GetComponent<UpgradesManager>().clickWeight;
+        gameObject.GetComponent<GameManager>().money += 
+            currentJob.HourlyPay
+            * gameObject.GetComponent<UpgradesManager>().workMultiplier
+            * clickWeight;
+        AddClicks(clickWeight);
     }
 
     public void ResetJob()
@@ -50,7 +54,7 @@ public class WorkManager : MonoBehaviour
         currentClicks = 0;
     }
 
-    public void SetJob(string currentJobName, int currentClicks)
+    public void SetCurrentJob(string currentJobName, int currentClicks)
     {
         this.currentClicks = currentClicks;
         if(currentJobName == null) {

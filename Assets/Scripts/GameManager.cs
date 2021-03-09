@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
 
             money += moneyGenerated;
 
-            graph.cleanupPrevious();
+            graph.CleanupPrevious();
 
             graph.ShowGraph(market.StockList[market.CurrentActiveStock].LastPrices.ToList());
 
@@ -170,7 +170,12 @@ public class GameManager : MonoBehaviour
             // Load Job Data
             string jobName = PlayerPrefs.GetString("currentPosition");
             int currentClicks = PlayerPrefs.GetInt("currentClicks");
-            gameObject.GetComponent<WorkManager>().SetJob(jobName, currentClicks);
+            gameObject.GetComponent<WorkManager>().SetCurrentJob(jobName, currentClicks);
+
+            // Load Upgrades Data
+            gameObject.GetComponent<UpgradesManager>().clickWeight = PlayerPrefs.GetInt("clickWeight");
+            gameObject.GetComponent<UpgradesManager>().workMultiplier = PlayerPrefs.GetFloat("workMultiplier");
+            gameObject.GetComponent<UpgradesManager>().overallStockIncomeMultiplier = PlayerPrefs.GetFloat("overallStockIncomeMultiplier");
         }
         else
         {
@@ -189,11 +194,13 @@ public class GameManager : MonoBehaviour
         money = 500.0f;
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         ChangeMultipler(multipliers);
-        gameObject.GetComponent<WorkManager>().ResetJob();
         market = new Market();
             
+        gameObject.GetComponent<WorkManager>().ResetJob();
+        gameObject.GetComponent<UpgradesManager>().ResetUpgrades();
         gameObject.GetComponent<UIManager>().ResetUI();
     }
+
     void SaveGame()
     {
         currentTimeString = System.DateTime.Now.ToString();
@@ -212,5 +219,10 @@ public class GameManager : MonoBehaviour
         // Save job data
         PlayerPrefs.SetString("currentPosition", gameObject.GetComponent<WorkManager>().currentJob.PositionTitle);
         PlayerPrefs.SetInt("currentClicks", gameObject.GetComponent<WorkManager>().currentClicks);
+
+        // Save upgrades data
+        PlayerPrefs.SetInt("clickWeight", gameObject.GetComponent<UpgradesManager>().clickWeight);
+        PlayerPrefs.SetFloat("workMultiplier", gameObject.GetComponent<UpgradesManager>().workMultiplier);
+        PlayerPrefs.SetFloat("overallStockIncomeMultiplier", gameObject.GetComponent<UpgradesManager>().overallStockIncomeMultiplier);
     }
 }

@@ -72,7 +72,7 @@ public class GraphManager : MonoBehaviour
         }
     }
 
-    public void cleanupPrevious()
+    public void CleanupPrevious()
     {
         foreach(Transform child in graphContainer.GetChild(1))
         {
