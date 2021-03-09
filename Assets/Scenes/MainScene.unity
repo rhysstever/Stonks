@@ -2342,8 +2342,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fc9cb44fd7fa74b81d12c1dba52215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTitle: 
-  buyOutCost: 0
+  buyoutCost: 0
+  currentClicks: 0
+--- !u!114 &880108341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880108337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e12c7e3f76c1df4b980f32f2882f770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickWeight: 0
+  workMultiplier: 0
+  overallStockIncomeMultiplier: 0
 --- !u!1 &887911894
 GameObject:
   m_ObjectHideFlags: 0
