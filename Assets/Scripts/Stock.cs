@@ -12,6 +12,9 @@ public class Stock
 	private float totalIncome;
 	private float volatility;
 	private Queue<float> lastPrices;
+	private bool spiking;
+	private bool falling;
+	private int eventCounter;
 	#endregion
 
 	#region Properties
@@ -45,6 +48,9 @@ public class Stock
         {
 			lastPrices.Enqueue(pricePerShare);
         }
+		spiking = false;
+		falling = false;
+		eventCounter = 0;
 	}
 	#endregion
 	
@@ -103,7 +109,28 @@ public class Stock
 
 	public float CalcSharePrice()
     {
-		this.pricePerShare += (Random.Range(-1.0f, 1.1f) * volatility) * (this.pricePerShare / 10);
+        if (spiking)
+        {
+			this.pricePerShare += (Random.Range(0.3f, 1.1f) * volatility) * (this.pricePerShare / 10);
+			eventCounter++;
+		}
+		else if (falling)
+        {
+			this.pricePerShare += (Random.Range(-1.0f, -0.3f) * volatility) * (this.pricePerShare / 10);
+			eventCounter++;
+		}
+        else
+        {
+			this.pricePerShare += (Random.Range(-1.0f, 1.1f) * volatility) * (this.pricePerShare / 10);
+		}
+
+		if(eventCounter == 10)
+        {
+			eventCounter = 0;
+			falling = false;
+			spiking = false;
+        }
+		
 		if(lastPrices != null)
         {
 			lastPrices.Enqueue(pricePerShare);
@@ -122,5 +149,17 @@ public class Stock
 	{
 		BuyStock(1);
 	}
+
+	public void EventChange(bool upOrDown)
+    {
+        if (upOrDown)
+        {
+			spiking = true;
+        }
+        else
+        {
+			falling = true;
+        }
+    }
 	#endregion
 }
