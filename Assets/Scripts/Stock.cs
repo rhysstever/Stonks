@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Event
+{
+	Spike,
+	Drop,
+	Manipulation,
+	Squeeze
+}
+
 public class Stock
 {
 	#region Fields
@@ -14,6 +22,8 @@ public class Stock
 	private Queue<float> lastPrices;
 	private bool spiking;
 	private bool falling;
+	private bool manipulated;
+	private bool squeeze;
 	private int eventCounter;
 	#endregion
 
@@ -50,6 +60,8 @@ public class Stock
         }
 		spiking = false;
 		falling = false;
+		manipulated = false;
+		squeeze = false;
 		eventCounter = 0;
 	}
 	#endregion
@@ -119,7 +131,17 @@ public class Stock
 			this.pricePerShare += (Random.Range(-1.0f, -0.3f) * volatility) * (this.pricePerShare / 10);
 			eventCounter++;
 		}
-        else
+		else if (manipulated)
+		{
+			this.pricePerShare += (Random.Range(-1.5f, -0.7f) * volatility) * (this.pricePerShare / 10);
+			eventCounter++;
+		}
+		else if (squeeze)
+		{
+			this.pricePerShare += (Random.Range(0.7f, 1.5f) * volatility) * (this.pricePerShare / 10);
+			eventCounter++;
+		}
+		else
         {
 			this.pricePerShare += (Random.Range(-1.0f, 1.1f) * volatility) * (this.pricePerShare / 10);
 		}
@@ -129,6 +151,8 @@ public class Stock
 			eventCounter = 0;
 			falling = false;
 			spiking = false;
+			manipulated = false;
+			squeeze = false;
         }
 		
 		if(lastPrices != null)
@@ -150,15 +174,28 @@ public class Stock
 		BuyStock(1);
 	}
 
-	public void EventChange(bool upOrDown)
+	public void EventChange(Event eIn)
     {
-        if (upOrDown)
+		if(spiking || falling || manipulated || squeeze)
+        {
+			return;
+        }
+
+        if (eIn == Event.Spike)
         {
 			spiking = true;
         }
-        else
+        else if(eIn == Event.Drop)
         {
 			falling = true;
+        }
+		else if(eIn == Event.Manipulation)
+        {
+			manipulated = true;
+        }
+		else if(eIn == Event.Squeeze)
+        {
+			squeeze = true;
         }
     }
 	#endregion
