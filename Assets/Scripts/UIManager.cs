@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
 {
     GameManager gm;
     public Canvas canvas;
-    
+    private GameObject GraphName;
+
     [SerializeField]
     GameObject GameUIPanel;
 
@@ -99,6 +100,8 @@ public class UIManager : MonoBehaviour
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
+
+        GraphName = GameObject.Find("GraphName");
     }
 
     // Update the multiplied costs on each stocks' buy button
@@ -126,6 +129,7 @@ public class UIManager : MonoBehaviour
             {
                 stock.BuyStock(gameObject.GetComponent<GameManager>().multipliers[0]);
                 gm.market.CurrentActiveStock = stock.Name;
+                GraphName.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = stock.Name + " stock graph";
             });
             stockButtons.Add(buyButton.GetComponent<Button>());
 
