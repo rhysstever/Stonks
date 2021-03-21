@@ -5220,7 +5220,7 @@ GameObject:
   - component: {fileID: 1667115004}
   - component: {fileID: 1667115003}
   m_Layer: 5
-  m_Name: Work Button (1)
+  m_Name: Promotion Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
