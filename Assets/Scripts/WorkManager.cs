@@ -99,6 +99,7 @@ public class WorkManager : MonoBehaviour
         if(gameObject.GetComponent<GameManager>().money >= buyoutCost) {
             gameObject.GetComponent<GameManager>().money -= buyoutCost;
             AddClicks(currentJob.ClicksToPromotion - currentClicks);
-        }
+        } else
+            Debug.Log("Not enough money to buy promotion!");
     }
 }
