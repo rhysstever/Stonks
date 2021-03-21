@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
 {
     GameManager gm;
     public Canvas canvas;
-    
+    private GameObject GraphName;
+
     [SerializeField]
     GameObject GameUIPanel;
 
@@ -53,6 +54,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI buyOutCost;
+
+    [SerializeField]
+    TextMeshProUGUI graphLabel;
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +103,8 @@ public class UIManager : MonoBehaviour
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
+
+        GraphName = GameObject.Find("GraphName");
     }
 
     // Update the multiplied costs on each stocks' buy button
@@ -126,6 +132,7 @@ public class UIManager : MonoBehaviour
             {
                 stock.BuyStock(gameObject.GetComponent<GameManager>().multipliers[0]);
                 gm.market.CurrentActiveStock = stock.Name;
+                graphLabel.text = stock.Name + " stock graph";
             });
             stockButtons.Add(buyButton.GetComponent<Button>());
 
