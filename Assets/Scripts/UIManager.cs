@@ -38,9 +38,12 @@ public class UIManager : MonoBehaviour
     List<Button> stockButtons;
     List<TextMeshProUGUI> stockTexts;
 
-    // Work Click Button
+    // Work Buttons
     [SerializeField]
     GameObject workButton;
+
+    [SerializeField]
+    GameObject buyPromotionButton;
 
     // Work Display Text
     [SerializeField]
@@ -100,6 +103,9 @@ public class UIManager : MonoBehaviour
 
         workButton.GetComponent<Button>().onClick.AddListener(() =>
                 gameObject.GetComponent<WorkManager>().WorkJob());
+
+        buyPromotionButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<WorkManager>().PromotionBuyOut());
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
