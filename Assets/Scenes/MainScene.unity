@@ -3196,6 +3196,10 @@ PrefabInstance:
       propertyPath: currentPosition
       value: 
       objectReference: {fileID: 1045302573}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: buyPromotionButton
+      value: 
+      objectReference: {fileID: 1667115001}
     - target: {fileID: 1838361082791998378, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: m_RootOrder
       value: 2
