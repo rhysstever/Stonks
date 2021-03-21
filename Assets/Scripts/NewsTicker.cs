@@ -25,24 +25,31 @@ public class NewsTicker : MonoBehaviour
     
     IEnumerator Start(){
         float width = tickerImage.GetComponent<RectTransform>().rect.width + textObject.preferredWidth;
-        Debug.Log("Width: " + width);
+        //Debug.Log("Width: " + width);
         Vector3 startPosition = m_textRectTransform.position;
 
         float scrollPosition = 0;
 
         while (true){
-            if(textObject.text != currentText)
+            //Changing text doesnt work - 420 isnt working and i dont know how to tell exactly how to tell when the text is exactly off screen to the left.
+            if(textObject.text != currentText &&  m_textRectTransform.position.x <= -420)
             {
-                Debug.Log("TEXT CHANGED.");
+                Debug.Log("Changing ticker text to new text...");
                 width = tickerImage.GetComponent<RectTransform>().rect.width + textObject.preferredWidth;
-                currentText = textObject.text;
+                textObject.text = currentText;
             }
 
             m_textRectTransform.position = new Vector3((-scrollPosition % width) + 2300, startPosition.y, startPosition.z);
             scrollPosition += scrollSpeed * 20 * Time.deltaTime;
-            Debug.Log("Scroll Pos: " + (-scrollPosition % width));
+            //Debug.Log("Scroll Pos: " + (-scrollPosition % width));
             yield return null;
         }
+    }
+
+    //Use this method to update the ticker text
+    public void UpdateText(string toText){
+        Debug.Log("Set ticker to update next cycle.");
+        currentText = toText;
     }
 
     // [SerializeField]
