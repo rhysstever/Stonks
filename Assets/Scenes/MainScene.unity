@@ -4497,6 +4497,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1045302573}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentRaiseText
+      value: 
+      objectReference: {fileID: 1786848969}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: buyPromotionButton
       value: 
       objectReference: {fileID: 1667115001}
@@ -4504,6 +4508,14 @@ PrefabInstance:
       propertyPath: upgradeRaiseButton
       value: 
       objectReference: {fileID: 112263645}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentInflationText
+      value: 
+      objectReference: {fileID: 841034332}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentClickWeightText
+      value: 
+      objectReference: {fileID: 1283746137}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: upgradeInflationButton
       value: 

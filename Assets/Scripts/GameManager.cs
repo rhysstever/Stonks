@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
             graph.ShowGraph(market.StockList[market.CurrentActiveStock].LastPrices.ToList());
 
-            Debug.Log(money);
+            // Debug.Log(money);
         }
     }
 

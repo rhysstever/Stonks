@@ -28,6 +28,7 @@ public class UpgradesManager : MonoBehaviour
         CreateClickUpgrades();
         CreateRaiseUpgrades();
         CreateInflationUpgrades();
+        LoadUpgrades();
     }
 
     // Update is called once per frame
@@ -58,6 +59,33 @@ public class UpgradesManager : MonoBehaviour
         UpgradeTier<float> inflactionTier2 = new UpgradeTier<float>(Upgrades.Inflation, 1.15f, 23500.0f, inflactionTier3);
         UpgradeTier<float> inflactionTier1 = new UpgradeTier<float>(Upgrades.Inflation, 1.05f, 2250.0f, inflactionTier2);
         startingInflation = new UpgradeTier<float>(Upgrades.Inflation, 1.0f, 0.0f, inflactionTier1);
+    }
+
+    void LoadUpgrades()
+	{
+        currentClickWeight = startingClickWeight;
+        for(int i = 0; i < clickWeightTierNum; i++) {
+            if(currentClickWeight.Next == null)
+                break;
+            else
+                currentClickWeight = currentClickWeight.Next;
+		}
+
+        currentRaise = startingRaise;
+        for(int i = 0; i < raiseTierNum; i++) {
+            if(currentRaise.Next == null)
+                break;
+            else
+                currentRaise = currentRaise.Next;
+        }
+
+        currentInflation = startingInflation;
+        for(int i = 0; i < inflationTierNum; i++) {
+            if(currentInflation.Next == null)
+                break;
+            else
+                currentInflation = currentInflation.Next;
+        }
     }
 
     public void ResetUpgrades()
