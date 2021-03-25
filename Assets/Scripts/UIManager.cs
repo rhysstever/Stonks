@@ -61,6 +61,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI graphLabel;
 
+    // Upgrade Buttons
+    [SerializeField]
+    GameObject upgradeClickWeightButton;
+
+    [SerializeField]
+    GameObject upgradeRaiseButton;
+
+    [SerializeField]
+    GameObject upgradeInflationButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +116,15 @@ public class UIManager : MonoBehaviour
 
         buyPromotionButton.GetComponent<Button>().onClick.AddListener(() =>
                 gameObject.GetComponent<WorkManager>().PromotionBuyOut());
+
+        upgradeClickWeightButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<int>(gameObject.GetComponent<UpgradesManager>().currentClickWeight));
+
+        upgradeRaiseButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<float>(gameObject.GetComponent<UpgradesManager>().currentRaise));
+
+        upgradeInflationButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<float>(gameObject.GetComponent<UpgradesManager>().currentInflation));
 
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
