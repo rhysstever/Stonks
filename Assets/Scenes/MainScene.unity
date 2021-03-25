@@ -3976,7 +3976,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Upgrade stock multiplier
+  m_text: Upgrade stock income multiplier
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f152bb610b5cd0b4db19da4cbea1f6e9, type: 2}
   m_sharedMaterial: {fileID: -6412910018313371797, guid: f152bb610b5cd0b4db19da4cbea1f6e9, type: 2}
@@ -4111,9 +4111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e12c7e3f76c1df4b980f32f2882f770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickWeight: 0
-  workMultiplier: 0
-  overallStockIncomeMultiplier: 0
+  clickWeightTierNum: 0
+  raiseTierNum: 0
+  inflationTierNum: 0
 --- !u!1 &887911894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4497,9 +4497,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1045302573}
     - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentRaiseText
+      value: 
+      objectReference: {fileID: 1786848969}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: buyPromotionButton
       value: 
       objectReference: {fileID: 1667115001}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: upgradeRaiseButton
+      value: 
+      objectReference: {fileID: 112263645}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentInflationText
+      value: 
+      objectReference: {fileID: 841034332}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: currentClickWeightText
+      value: 
+      objectReference: {fileID: 1283746137}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: upgradeInflationButton
+      value: 
+      objectReference: {fileID: 556338179}
+    - target: {fileID: 1802486570, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
+      propertyPath: upgradeClickWeightButton
+      value: 
+      objectReference: {fileID: 334751969}
     - target: {fileID: 1838361082791998378, guid: 362cd2149c8c40a438a0f47e77c38280, type: 3}
       propertyPath: m_RootOrder
       value: 2

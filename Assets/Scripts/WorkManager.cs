@@ -40,11 +40,11 @@ public class WorkManager : MonoBehaviour
     /// </summary>
     public void WorkJob()
     {
-        int clickWeight = gameObject.GetComponent<UpgradesManager>().clickWeight;
+        int clickWeight = gameObject.GetComponent<UpgradesManager>().currentClickWeight.Data;
         gameObject.GetComponent<GameManager>().money += 
-            currentJob.HourlyPay
-            * gameObject.GetComponent<UpgradesManager>().workMultiplier
-            * clickWeight;
+            currentJob.HourlyPay * 
+            gameObject.GetComponent<UpgradesManager>().currentRaise.Data *
+            clickWeight;
         AddClicks(clickWeight);
         gameObject.GetComponent<NewsTicker>().UpdateText("Update the text to this! " + currentClicks);
     }

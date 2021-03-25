@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         if(timer > 1.0f) {
             timer = 0.0f;
 
-            float moneyGenerated = market.CalcMoney();
+            float moneyGenerated = market.CalcMoney() * gameObject.GetComponent<UpgradesManager>().currentInflation.Data;
 
             money += moneyGenerated;
 
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
 
             graph.ShowGraph(market.StockList[market.CurrentActiveStock].LastPrices.ToList());
 
-            Debug.Log(money);
+            // Debug.Log(money);
         }
     }
 
@@ -173,9 +173,9 @@ public class GameManager : MonoBehaviour
             gameObject.GetComponent<WorkManager>().SetCurrentJob(jobName, currentClicks);
 
             // Load Upgrades Data
-            gameObject.GetComponent<UpgradesManager>().clickWeight = PlayerPrefs.GetInt("clickWeight");
-            gameObject.GetComponent<UpgradesManager>().workMultiplier = PlayerPrefs.GetFloat("workMultiplier");
-            gameObject.GetComponent<UpgradesManager>().overallStockIncomeMultiplier = PlayerPrefs.GetFloat("overallStockIncomeMultiplier");
+            gameObject.GetComponent<UpgradesManager>().clickWeightTierNum = PlayerPrefs.GetInt("clickWeightTierNum");
+            gameObject.GetComponent<UpgradesManager>().raiseTierNum = PlayerPrefs.GetInt("raiseTierNum");
+            gameObject.GetComponent<UpgradesManager>().inflationTierNum = PlayerPrefs.GetInt("inflationTierNum");
         }
         else
         {
@@ -221,8 +221,8 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("currentClicks", gameObject.GetComponent<WorkManager>().currentClicks);
 
         // Save upgrades data
-        PlayerPrefs.SetInt("clickWeight", gameObject.GetComponent<UpgradesManager>().clickWeight);
-        PlayerPrefs.SetFloat("workMultiplier", gameObject.GetComponent<UpgradesManager>().workMultiplier);
-        PlayerPrefs.SetFloat("overallStockIncomeMultiplier", gameObject.GetComponent<UpgradesManager>().overallStockIncomeMultiplier);
+        PlayerPrefs.SetInt("clickWeightTierNum", gameObject.GetComponent<UpgradesManager>().clickWeightTierNum);
+        PlayerPrefs.SetInt("raiseTierNum", gameObject.GetComponent<UpgradesManager>().raiseTierNum);
+        PlayerPrefs.SetInt("inflationTierNum", gameObject.GetComponent<UpgradesManager>().inflationTierNum);
     }
 }

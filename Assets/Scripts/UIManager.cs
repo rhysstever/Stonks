@@ -61,6 +61,26 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI graphLabel;
 
+    // Upgrade Buttons
+    [SerializeField]
+    GameObject upgradeClickWeightButton;
+
+    [SerializeField]
+    GameObject upgradeRaiseButton;
+
+    [SerializeField]
+    GameObject upgradeInflationButton;
+
+    // Upgrade Display Text
+    [SerializeField]
+    TextMeshProUGUI currentClickWeightText;
+
+    [SerializeField]
+    TextMeshProUGUI currentRaiseText;
+
+    [SerializeField]
+    TextMeshProUGUI currentInflationText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,16 +127,19 @@ public class UIManager : MonoBehaviour
         buyPromotionButton.GetComponent<Button>().onClick.AddListener(() =>
                 gameObject.GetComponent<WorkManager>().PromotionBuyOut());
 
+        upgradeClickWeightButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<int>(gameObject.GetComponent<UpgradesManager>().currentClickWeight));
+
+        upgradeRaiseButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<float>(gameObject.GetComponent<UpgradesManager>().currentRaise));
+
+        upgradeInflationButton.GetComponent<Button>().onClick.AddListener(() =>
+                gameObject.GetComponent<UpgradesManager>().BuyUpgrade<float>(gameObject.GetComponent<UpgradesManager>().currentInflation));
+
         gm.ChangeMultipler(1);
         multiply1.GetComponent<Button>().Select();
 
         GraphName = GameObject.Find("GraphName");
-    }
-
-    // Update the multiplied costs on each stocks' buy button
-    public void UpdateMultiplicity()
-    {
-
     }
 
     public void ResetUI()
@@ -177,5 +200,40 @@ public class UIManager : MonoBehaviour
         int clicksRemainingCount = gameObject.GetComponent<WorkManager>().currentJob.ClicksToPromotion - gameObject.GetComponent<WorkManager>().currentClicks;
         clicksRemaining.text = "Clicks Remaining: " + clicksRemainingCount;
         buyOutCost.text = "Buyout Cost: " + gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
+
+        // Update Upgrade button text
+        if(gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next != null) {
+            upgradeClickWeightButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = 
+                "Upgrade Click to " + 
+                gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next.Data + 
+                "x for " + 
+                gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next.Cost.ToString("C");
+		} else
+            upgradeClickWeightButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+
+        if(gameObject.GetComponent<UpgradesManager>().currentRaise.Next != null) {
+            upgradeRaiseButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                "Upgrade Raise to " +
+                gameObject.GetComponent<UpgradesManager>().currentRaise.Next.Data.ToString("P") +
+                " for " +
+                gameObject.GetComponent<UpgradesManager>().currentRaise.Next.Cost.ToString("C");
+        }
+        else
+            upgradeRaiseButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+
+        if(gameObject.GetComponent<UpgradesManager>().currentInflation.Next != null) {
+            upgradeInflationButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                "Upgrade Stock Multiplier to " +
+                gameObject.GetComponent<UpgradesManager>().currentInflation.Next.Data.ToString("P") +
+                " for " +
+                gameObject.GetComponent<UpgradesManager>().currentInflation.Next.Cost.ToString("C");
+        }
+        else
+            upgradeInflationButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+
+        // Update Upgrade display text
+        currentClickWeightText.text = "Current Click Amount: " + gameObject.GetComponent<UpgradesManager>().currentClickWeight.Data + "x";
+        currentRaiseText.text = "Current Hourly Pay Multiplier: " + gameObject.GetComponent<UpgradesManager>().currentRaise.Data.ToString("P");
+        currentInflationText.text = "Current Stock Multiplier: " + gameObject.GetComponent<UpgradesManager>().currentInflation.Data.ToString("P");
     }
 }
