@@ -3247,6 +3247,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 887911895}
     m_Modifications:
+    - target: {fileID: 7115032270075320069, guid: f08eb6c4db3d11745b7adf1b844fc2da, type: 3}
+      propertyPath: textObj
+      value: 
+      objectReference: {fileID: 2290854691532714045, guid: d82ed2e3906dceb4485f2a03d751414e, type: 3}
     - target: {fileID: 7115032270075320074, guid: f08eb6c4db3d11745b7adf1b844fc2da, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4321,6 +4325,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 891773871}
   m_CullTransparentMesh: 1
+--- !u!224 &952802361 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7115032269939708281, guid: f08eb6c4db3d11745b7adf1b844fc2da, type: 3}
+  m_PrefabInstance: {fileID: 582703058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &966942021
 GameObject:
   m_ObjectHideFlags: 0
@@ -6575,7 +6584,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GME Stock Graph
+  m_text: DOGE Stock Graph
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cbacb048f2504bd48ab9dc7f1b0a28fc, type: 2}
   m_sharedMaterial: {fileID: -1892679650347858481, guid: cbacb048f2504bd48ab9dc7f1b0a28fc, type: 2}
@@ -8391,6 +8400,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1958196173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958196174}
+  m_Layer: 5
+  m_Name: labels
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1958196174
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958196173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 952802361}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1969892942
 GameObject:
   m_ObjectHideFlags: 0

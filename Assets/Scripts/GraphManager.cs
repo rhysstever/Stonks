@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GraphManager : MonoBehaviour
 {
     [SerializeField] public Sprite circleSprite;
+    [SerializeField] public GameObject textObj;
     private RectTransform graphContainer;
 
     private void Awake()
@@ -48,7 +49,7 @@ public class GraphManager : MonoBehaviour
 
         float graphHeight = graphContainer.sizeDelta.y;
         float xSize = 10f;
-        float yMaximum = 100f;
+        float yMaximum = 80f;
         float xMaximum = 100f;
 
         GameObject lastCircleGameObject = null;
@@ -63,10 +64,11 @@ public class GraphManager : MonoBehaviour
             float m = (yMaximum) / (currentMax - currentMin);
             float yPosition = m * valueList[i] - (m * currentMin);
 
-            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
+            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition + 10.0f));
             if(lastCircleGameObject != null)
             {
                 CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
+                CreateTextLabel(new Vector2(xPosition, 3.0f), valueList[i]);
             }
             lastCircleGameObject = circleGameObject;
         }
@@ -82,6 +84,22 @@ public class GraphManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        foreach (Transform child in graphContainer.GetChild(3))
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void CreateTextLabel(Vector2 pos, float value)
+    {
+        GameObject newLabel = Instantiate(textObj);
+        newLabel.transform.SetParent(graphContainer.GetChild(3));
+        RectTransform rectTransform = newLabel.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector3(pos.x, pos.y, 10.0f);
+        //rectTransform.sizeDelta = new Vector2(160, 30);
+        rectTransform.anchorMin = new Vector2(0, 0);
+        rectTransform.anchorMax = new Vector2(0, 0);
+        newLabel.GetComponent<Text>().text = "$" + string.Format("{0:0.##}", value);
     }
 
     private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)

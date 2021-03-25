@@ -158,7 +158,7 @@ public class Stock
 		if(lastPrices != null)
         {
 			lastPrices.Enqueue(pricePerShare);
-			if (lastPrices.Count >= 15)
+			if (lastPrices.Count >= 8)
 			{
 				lastPrices.Dequeue();
 			}
