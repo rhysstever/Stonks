@@ -46,6 +46,7 @@ public class WorkManager : MonoBehaviour
             gameObject.GetComponent<UpgradesManager>().currentRaise.Data *
             clickWeight;
         AddClicks(clickWeight);
+        gameObject.GetComponent<NewsTicker>().UpdateText("Update the text to this! " + currentClicks);
     }
 
     public void ResetJob()
