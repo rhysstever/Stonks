@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public float money;
     public int[] multipliers;
-    float timer;
     public Market market;
+    float timer;
+    bool isMaxMultiplier;
 
     [SerializeField]
     GraphManager graph;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         graph = graph.GetComponent<GraphManager>();
         market = new Market();
+        isMaxMultiplier = false;
         LoadGame();
     }
 
@@ -42,6 +44,9 @@ public class GameManager : MonoBehaviour
     {
         GenerateAndDisplayIncome();
         timer += Time.deltaTime;
+
+        if(isMaxMultiplier)
+            ChangeMultipler(CalculateMaxMultiplier());
 
         // Hit ESC to close the game
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -67,6 +72,7 @@ public class GameManager : MonoBehaviour
             stockCount++;
 		}
 
+        isMaxMultiplier = true;
         return newMultipliers;
     }
 
@@ -79,6 +85,7 @@ public class GameManager : MonoBehaviour
     {
         for(int i = 0; i < multipliers.Length; i++)
             multipliers[i] = newMultiplier;
+        isMaxMultiplier = false;
     }
 
     /// <summary>
