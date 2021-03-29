@@ -51,8 +51,7 @@ public class WorkManager : MonoBehaviour
 
     public void ResetJob()
 	{
-        currentJob = startingJob;
-        currentClicks = 0;
+        SetCurrentJob(startingJob.PositionTitle, 0);
     }
 
     public void SetCurrentJob(string currentJobName, int currentClicks)
