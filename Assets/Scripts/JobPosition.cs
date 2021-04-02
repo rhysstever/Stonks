@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,17 +25,14 @@ public class JobPosition
 	/// Creates a job position the player can have
 	/// </summary>
 	/// <param name="positionTitle">The name of the position</param>
-	/// <param name="hourlyPay">The amount per click the player makes</param>
-	/// <param name="clicksToPromotion">How many total clicks the player needs to click to move to the next job</param>
-	/// <param name="perClickBuyoutCost">How much each click costs to be bought</param>
 	/// <param name="nextPosition">The next job after this current one</param>
-	public JobPosition(string positionTitle, float hourlyPay, int clicksToPromotion, float perClickBuyoutCost, JobPosition nextPosition)
+	public JobPosition(string positionTitle, int tierNum, JobPosition nextPosition)
 	{
 		this.positionTitle = positionTitle;
-		this.hourlyPay = hourlyPay;
-		this.clicksToPromotion = clicksToPromotion;
-		this.perClickBuyoutCost = perClickBuyoutCost;
 		this.nextPosition = nextPosition;
+		hourlyPay = 7.8f * (tierNum * tierNum) - 16.25f * tierNum + 8.55f;
+		clicksToPromotion = (int)(Math.Pow(4, tierNum) * 10);
+		perClickBuyoutCost = (float)Math.Pow(3.2f, tierNum);
 	}
 	#endregion
 
