@@ -190,8 +190,21 @@ public class UIManager : MonoBehaviour
 
             // Calculates the total price of the purchase, based on the multiplier, then displays it in the currency format
             float price = currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multipliers[i];
-            stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+
+            if(price > gm.money)
+            {
+                stockButtons[i].interactable = false;
+                stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+                "Not enough money!";
+            }
+            else
+            {
+                stockButtons[i].interactable = true;
+
+                stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
                 "Buy " + gm.multipliers[i] + " shares for " + price.ToString("C");
+            }
+
         }
 
         // Update job display text
