@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
         Transform t = launchScreen.transform.GetChild(3);
         t.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Stonks only go up!";
 
-        money = 500.0f;
+        money = 0.0f;
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         ChangeMultipler(multipliers);
         market = new Market();
