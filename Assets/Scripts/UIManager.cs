@@ -190,8 +190,31 @@ public class UIManager : MonoBehaviour
 
             // Calculates the total price of the purchase, based on the multiplier, then displays it in the currency format
             float price = currentStock.PricePerShare * gameObject.GetComponent<GameManager>().multipliers[i];
-            stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+
+            if(price > gm.money)
+            {
+                stockButtons[i].interactable = false;
+                stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
+                "Not enough money!";
+            }
+            else
+            {
+                stockButtons[i].interactable = true;
+
+                stockButtons[i].transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = 
                 "Buy " + gm.multipliers[i] + " shares for " + price.ToString("C");
+            }
+
+        }
+
+        if(gameObject.GetComponent<WorkManager>().buyoutCost > gm.money)
+        {
+            buyPromotionButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            buyPromotionButton.GetComponent<Button>().interactable = true;
+
         }
 
         // Update job display text
@@ -208,8 +231,21 @@ public class UIManager : MonoBehaviour
                 gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next.Data + 
                 "x \nfor " + 
                 gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next.Cost.ToString("C");
+
+                if(gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next.Cost > gm.money)
+                {
+                    upgradeClickWeightButton.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    upgradeClickWeightButton.GetComponent<Button>().interactable = true;
+                }
 		} else
+        {
             upgradeClickWeightButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+            upgradeClickWeightButton.GetComponent<Button>().interactable = false;
+
+        }
 
         if(gameObject.GetComponent<UpgradesManager>().currentRaise.Next != null) {
             upgradeRaiseButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
@@ -217,9 +253,21 @@ public class UIManager : MonoBehaviour
                 ((gameObject.GetComponent<UpgradesManager>().currentRaise.Next.Data - 1.0f) * 100).ToString("N0") + 
                 "% \nfor " +
                 gameObject.GetComponent<UpgradesManager>().currentRaise.Next.Cost.ToString("C");
+
+                if(gameObject.GetComponent<UpgradesManager>().currentRaise.Next.Cost > gm.money)
+                {
+                    upgradeRaiseButton.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    upgradeRaiseButton.GetComponent<Button>().interactable = true;
+                }
         }
         else
+        {
             upgradeRaiseButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+            upgradeRaiseButton.GetComponent<Button>().interactable = false;
+        }
 
         if(gameObject.GetComponent<UpgradesManager>().currentInflation.Next != null) {
             upgradeInflationButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
@@ -227,9 +275,21 @@ public class UIManager : MonoBehaviour
                 ((gameObject.GetComponent<UpgradesManager>().currentInflation.Next.Data - 1.0f) * 100).ToString("N0") +
                 "% \nfor " +
                 gameObject.GetComponent<UpgradesManager>().currentInflation.Next.Cost.ToString("C");
+
+                if(gameObject.GetComponent<UpgradesManager>().currentInflation.Next.Cost > gm.money)
+                {
+                    upgradeInflationButton.GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    upgradeInflationButton.GetComponent<Button>().interactable = true;
+                }
         }
         else
+        {
             upgradeInflationButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade Maxed";
+            upgradeInflationButton.GetComponent<Button>().interactable = false;
+        }
 
         // Update Upgrade display text
         currentClickWeightText.text = "Work Click Amount: " + gameObject.GetComponent<UpgradesManager>().currentClickWeight.Data + "x";
