@@ -174,11 +174,11 @@ public class Stock
 		BuyStock(1);
 	}
 
-	public void EventChange(Event eIn)
+	public bool EventChange(Event eIn)
     {
 		if(spiking || falling || manipulated || squeeze)
         {
-			return;
+			return false;
         }
 
         if (eIn == Event.Spike)
@@ -197,6 +197,7 @@ public class Stock
         {
 			squeeze = true;
         }
+		return true;
     }
 	#endregion
 }
