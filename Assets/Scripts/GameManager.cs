@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public float money;
     public int[] multipliers;
     public Market market;
+    public NewsTicker nt;
     float timer;
     bool isMaxMultiplier;
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         graph = graph.GetComponent<GraphManager>();
         market = new Market();
+        nt = this.gameObject.GetComponent<NewsTicker>();
         isMaxMultiplier = false;
         LoadGame();
     }

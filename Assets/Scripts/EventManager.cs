@@ -9,12 +9,14 @@ public class EventManager : MonoBehaviour
     Dictionary<string, string> negativeStockTickerTexts;
     GameManager gm;
     Market m;
+    NewsTicker nt;
     public string StockTickerText { get { return this.stockTickerText; } }
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         m = gm.market;
+        nt = gm.nt;
 
         positiveStockTickerTexts = new Dictionary<string, string>();
         negativeStockTickerTexts = new Dictionary<string, string>();
@@ -67,14 +69,18 @@ public class EventManager : MonoBehaviour
         if(eventType == 3)
         {
             Debug.Log("Squeeze on " + s.Name);
-            s.EventChange(Event.Squeeze);
-            this.stockTickerText = positiveStockTickerTexts[s.Name + "squeeze"];
+            if (s.EventChange(Event.Squeeze))
+            {
+                nt.UpdateText(positiveStockTickerTexts[s.Name + "squeeze"]);
+            }
         }
         else
         {
             Debug.Log("Spike on " + s.Name);
-            s.EventChange(Event.Spike);
-            this.stockTickerText = positiveStockTickerTexts[s.Name];
+            if (s.EventChange(Event.Spike))
+            {
+                nt.UpdateText(positiveStockTickerTexts[s.Name]);
+            }
         }
     }
 
@@ -98,14 +104,18 @@ public class EventManager : MonoBehaviour
         if (eventType == 3)
         {
             Debug.Log("Manipulation on " + s.Name);
-            s.EventChange(Event.Manipulation);
-            this.stockTickerText = negativeStockTickerTexts[s.Name + "manip"];
+            if (s.EventChange(Event.Manipulation))
+            {
+                nt.UpdateText(negativeStockTickerTexts[s.Name + "manip"]);
+            }           
         }
         else
         {
             Debug.Log("Drop on " + s.Name);
-            s.EventChange(Event.Drop);
-            this.stockTickerText = negativeStockTickerTexts[s.Name];
+            if (s.EventChange(Event.Drop))
+            {
+                nt.UpdateText(negativeStockTickerTexts[s.Name]);
+            }
         }
     }
 }

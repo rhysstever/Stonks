@@ -48,7 +48,7 @@ public class NewsTicker : MonoBehaviour
 
     //Use this method to update the ticker text
     public void UpdateText(string toText){
-        Debug.Log("Set ticker to update next cycle.");
+        Debug.Log("Set ticker to update next cycle. String is " + toText);
         currentText = toText;
     }
 
