@@ -104,7 +104,11 @@ public class GraphManager : MonoBehaviour
 
     private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
     {
-        GameObject gameObject = new GameObject("dotConnection", typeof(Image));
+        LineRenderer lr = new LineRenderer();
+        lr.transform.SetParent(graphContainer.GetChild(2), false);
+
+
+        /*GameObject gameObject = new GameObject("dotConnection", typeof(Image));
         gameObject.transform.SetParent(graphContainer.GetChild(2), false);
 
         Vector2 dir = (dotPositionB - dotPositionA).normalized;
@@ -126,6 +130,6 @@ public class GraphManager : MonoBehaviour
         }
 
         rectTransform.anchoredPosition = dotPositionA + dir * distance * .5f;
-        rectTransform.localEulerAngles = new Vector3(0, 0, angle);
+        rectTransform.localEulerAngles = new Vector3(0, 0, angle);*/
     }
 }
