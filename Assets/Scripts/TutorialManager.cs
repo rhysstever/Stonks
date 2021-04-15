@@ -29,7 +29,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField]
     GameObject TutorialBox;
 
+    [SerializeField]
+    GameObject TutorialBoxExtra;
+
     private GameObject tutorialText;
+    private GameObject tutorialTextExtra;
     private int stepNum;
 
     // Start is called before the first frame update
@@ -42,8 +46,10 @@ public class TutorialManager : MonoBehaviour
         DebugMenu.SetActive(false);
         TutorialBox.SetActive(false);
         UpgradesMenu.SetActive(false);
+        TutorialBoxExtra.SetActive(false);
 
         tutorialText = TutorialBox.transform.GetChild(1).gameObject;
+        tutorialTextExtra = TutorialBoxExtra.transform.GetChild(1).gameObject;
         stepNum = 1;
     }
 
@@ -75,14 +81,19 @@ public class TutorialManager : MonoBehaviour
             case 3:
                 JobUI.SetActive(false);
                 Purchasing.SetActive(true);
-                TutorialBox.transform.position = new Vector3(1400, 540, 0);
+                TutorialBoxExtra.SetActive(true);
+                TutorialBox.transform.position = new Vector3(1400, 500, 0);
                 tutorialText.GetComponent<TextMeshProUGUI>().text = "Over here you can see how much money you have. You can also buy stocks and see their current prices.";
                 tutorialText.GetComponent<TextMeshProUGUI>().fontSize = 36;
+                TutorialBoxExtra.transform.position = new Vector3(1400, 1000, 0);
+                tutorialTextExtra.GetComponent<TextMeshProUGUI>().text = "The yellow buttons on the left let you select what stock graph is currently shown.";
+                tutorialTextExtra.GetComponent<TextMeshProUGUI>().fontSize = 36;
                 stepNum = 4;
                 break;
             case 4:
                 Purchasing.SetActive(false);
                 News.SetActive(true);
+                TutorialBoxExtra.SetActive(false);
                 TutorialBox.transform.position = new Vector3(960, 540, 0);
                 tutorialText.GetComponent<TextMeshProUGUI>().text = "Up top is the news ticker, where you'll hear about stocks rapidly rising or falling.";
                 tutorialText.GetComponent<TextMeshProUGUI>().fontSize = 40;
