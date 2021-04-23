@@ -81,6 +81,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI currentInflationText;
 
+    [SerializeField]
+    Animator launchAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -303,5 +306,10 @@ public class UIManager : MonoBehaviour
         currentClickWeightText.text = "Work Click Amount: " + gameObject.GetComponent<UpgradesManager>().currentClickWeight.Data + "x";
         currentRaiseText.text = "Pay Rate Multiplier: " + ((gameObject.GetComponent<UpgradesManager>().currentRaise.Data - 1.0f) * 100).ToString("N0") + "%";
         currentInflationText.text = "Stock Income Multiplier: " + ((gameObject.GetComponent<UpgradesManager>().currentInflation.Data - 1.0f) * 100).ToString("N0") + "%";
+    }
+
+    public void CloseLaunch()
+    {
+        launchAnimator.SetTrigger("AnimateOut");
     }
 }
