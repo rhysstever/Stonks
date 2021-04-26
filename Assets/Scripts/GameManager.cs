@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Adds money to the player every second, based on the shares owned
+    /// Also saves the game every second to fix WebGL's problems
     /// </summary>
     void GenerateAndDisplayIncome()
     {
@@ -125,6 +126,9 @@ public class GameManager : MonoBehaviour
             graph.CleanupPrevious();
 
             graph.ShowGraph(market.StockList[market.CurrentActiveStock].LastPrices.ToList());
+
+            SaveGame();
+            PlayerPrefs.Save();
 
             // Debug.Log(money);
         }
