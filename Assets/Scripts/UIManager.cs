@@ -165,6 +165,14 @@ public class UIManager : MonoBehaviour
             });
             stockButtons.Add(buyButton.GetComponent<Button>());
 
+            //Set the stock icon to pull up the graph
+            GameObject stockIcon = newStock.transform.Find("STOCK_ICON").gameObject;
+            stockIcon.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                gm.market.CurrentActiveStock = stock.Name;
+                graphLabel.text = stock.Name + " stock graph";
+            });
+
             // Finds all stock text objects and adds it to a list
             string stockTextName = stock.Name;
             GameObject newText = newStock.transform.Find("STOCK_NAME").gameObject;

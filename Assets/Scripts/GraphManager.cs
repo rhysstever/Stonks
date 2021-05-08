@@ -25,12 +25,12 @@ public class GraphManager : MonoBehaviour
     private GameObject CreateCircle(Vector2 anchoredPosition)
     {
         GameObject gameObject = new GameObject("circle", typeof(Image));
-        gameObject.transform.SetParent(graphContainer.GetChild(1), false);
+        gameObject.transform.SetParent(graphContainer.GetChild(2), false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
         rectTransform.localScale = new Vector3(0.25f, .5f, 1);
-        rectTransform.sizeDelta = new Vector2(10, 10);
+        rectTransform.sizeDelta = new Vector2(20, 20);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         return gameObject;
@@ -105,7 +105,7 @@ public class GraphManager : MonoBehaviour
     private void CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
     {
         GameObject gameObject = new GameObject("dotConnection", typeof(Image));
-        gameObject.transform.SetParent(graphContainer.GetChild(2), false);
+        gameObject.transform.SetParent(graphContainer.GetChild(1), false);
 
         Vector2 dir = (dotPositionB - dotPositionA).normalized;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
@@ -113,7 +113,7 @@ public class GraphManager : MonoBehaviour
 
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
-        rectTransform.sizeDelta = new Vector2(10, 3f);
+        rectTransform.sizeDelta = new Vector2(distance, 3f);
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         if(angle >= 0)
