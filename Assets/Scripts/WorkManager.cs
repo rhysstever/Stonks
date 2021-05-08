@@ -29,9 +29,9 @@ public class WorkManager : MonoBehaviour
 	{
 		JobPosition job7 = new JobPosition("Space Entrepreneur",                7, null);
 		JobPosition job6 = new JobPosition("CEO",			                    6, job7);
-		JobPosition job5 = new JobPosition("Owner",				                5, job6);
-		JobPosition job4 = new JobPosition("Assistant to the Regional Manager", 4, job5);
-		JobPosition job3 = new JobPosition("Office Job",                        3, job4);
+		JobPosition job5 = new JobPosition("Assistant to the Regional Manager", 5, job6);
+		JobPosition job4 = new JobPosition("Excel Jockey",						4, job5);
+		JobPosition job3 = new JobPosition("Office Temp",                       3, job4);
 		JobPosition job2 = new JobPosition("Food Driver",                       2, job3);
 			 startingJob = new JobPosition("Reddit Scroller",                   1, job2);
 	}

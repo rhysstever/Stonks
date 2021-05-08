@@ -22,14 +22,14 @@ public class Market
     {
         stockList = new Dictionary<string, Stock>();
 
-        stockList.Add("DOGE", new Stock("DOGE", 0.05f, 0));
-        stockList.Add("AMC", new Stock("AMC", 3.00f, 0));
-        stockList.Add("NOK", new Stock("NOK", 4.20f, 0));
-        stockList.Add("BB", new Stock("BB", 10.95f, 0));
-        stockList.Add("GME", new Stock("GME", 14.00f, 0));
-        stockList.Add("PLTR", new Stock("PLTR", 25.00f, 0));
-        stockList.Add("TSLA", new Stock("TSLA", 200.00f, 0));
-        stockList.Add("BTC", new Stock("BTC", 5000.00f, 0));  
+        stockList.Add("DOGE", new Stock("DOGE", 0.05f,     0));
+        stockList.Add("AMC",  new Stock("AMC",  1.50f,     0));
+        stockList.Add("NOK",  new Stock("NOK",  4.20f,     0));
+        stockList.Add("BB",   new Stock("BB",   10.95f,    0));
+        stockList.Add("GME",  new Stock("GME",  69.69f,    0));
+        stockList.Add("PLTR", new Stock("PLTR", 420.00f,   0));
+        stockList.Add("TSLA", new Stock("TSLA", 7890.00f,  0));
+        stockList.Add("BTC",  new Stock("BTC",  58725.00f, 0));  
     }
 
     /// <summary>
