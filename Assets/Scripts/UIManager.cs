@@ -225,12 +225,24 @@ public class UIManager : MonoBehaviour
 
         }
 
+        //Change labels for prestige
+        if(gameObject.GetComponent<WorkManager>().currentJob.NextPosition == null)
+        {
+            buyPromotionButton.GetComponent<TextMeshProUGUI>().text = "Prestige!";
+            buyPromotionButton.GetComponent<Image>().color = Color.red;
+
+            buyOutCost.text = "Prestige Cost: " + gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
+        }
+        else
+        {
+            buyOutCost.text = "Buyout Cost: " + gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
+        }
+
         // Update job display text
         currentPosition.text = "Current Position: " + gameObject.GetComponent<WorkManager>().currentJob.PositionTitle;
         payRate.text = "Pay Rate: " + gameObject.GetComponent<WorkManager>().currentJob.HourlyPay.ToString("C");
         int clicksRemainingCount = (int)gameObject.GetComponent<WorkManager>().currentJob.ClicksToPromotion - gameObject.GetComponent<WorkManager>().currentClicks;
-        clicksRemaining.text = "Clicks Remaining: " + clicksRemainingCount;
-        buyOutCost.text = "Buyout Cost: " + gameObject.GetComponent<WorkManager>().buyoutCost.ToString("C");
+        clicksRemaining.text = "Clicks Remaining: " + clicksRemainingCount;      
 
         // Update Upgrade button text
         if(gameObject.GetComponent<UpgradesManager>().currentClickWeight.Next != null) {
