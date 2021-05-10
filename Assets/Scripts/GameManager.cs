@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     float timer;
     bool isMaxMultiplier;
 
+    int prestigeLevel;
+    public float passiveMult;
+    public float activeMult;
+
     [SerializeField]
     GraphManager graph;
 
@@ -34,11 +38,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
+        prestigeLevel = 1;
         graph = graph.GetComponent<GraphManager>();
         market = new Market();
         nt = this.gameObject.GetComponent<NewsTicker>();
         isMaxMultiplier = false;
         LoadGame();
+
     }
 
     // Update is called once per frame
@@ -119,7 +125,7 @@ public class GameManager : MonoBehaviour
         if(timer > 1.0f) {
             timer = 0.0f;
 
-            float moneyGenerated = market.CalcMoney() * gameObject.GetComponent<UpgradesManager>().currentInflation.Data;
+            float moneyGenerated = market.CalcMoney() * passiveMult * gameObject.GetComponent<UpgradesManager>().currentInflation.Data;
 
             money += moneyGenerated;
 
@@ -151,6 +157,10 @@ public class GameManager : MonoBehaviour
 
             lastTimeString = PlayerPrefs.GetString("lastTime");
             money = PlayerPrefs.GetFloat("money");
+            prestigeLevel = PlayerPrefs.GetInt("prestigeLvl");
+
+            passiveMult = 1.0f + (prestigeLevel * .1f);
+            activeMult = 1.0f + (prestigeLevel * .1f);
 
             Debug.Log("Player has $" + money + " before offline calculations.");
 
@@ -208,7 +218,9 @@ public class GameManager : MonoBehaviour
         multipliers = new int[8] { 1, 1, 1, 1, 1, 1, 1, 1 };
         ChangeMultipler(multipliers);
         market = new Market();
-            
+        passiveMult = 1.0f;
+        activeMult = 1.0f;
+
         gameObject.GetComponent<WorkManager>().ResetJob();
         gameObject.GetComponent<UpgradesManager>().ResetUpgrades();
         gameObject.GetComponent<UIManager>().ResetUI();
@@ -222,8 +234,10 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("lastTime", currentTimeString);
         PlayerPrefs.SetFloat("money", money);
 
+        PlayerPrefs.SetInt("prestigeLvl", prestigeLevel);
+
         //Save individual stocks
-        foreach(KeyValuePair<string, Stock> stock in market.StockList)
+        foreach (KeyValuePair<string, Stock> stock in market.StockList)
         {
             PlayerPrefs.SetInt(stock.Key + "Amount", stock.Value.SharesOwned);
             PlayerPrefs.SetFloat(stock.Key + "Price", stock.Value.PricePerShare);
@@ -237,5 +251,14 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("clickWeightTierNum", gameObject.GetComponent<UpgradesManager>().clickWeightTierNum);
         PlayerPrefs.SetInt("raiseTierNum", gameObject.GetComponent<UpgradesManager>().raiseTierNum);
         PlayerPrefs.SetInt("inflationTierNum", gameObject.GetComponent<UpgradesManager>().inflationTierNum);
+    }
+
+    public void Prestige()
+    {
+        RestartGame();
+
+        prestigeLevel++;
+
+        PlayerPrefs.Save();
     }
 }

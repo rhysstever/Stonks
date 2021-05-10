@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorkManager : MonoBehaviour
 {
 	public JobPosition currentJob;
+	GameManager gm;
 	public float buyoutCost;
 	public int currentClicks;
 	JobPosition startingJob;
@@ -14,7 +15,9 @@ public class WorkManager : MonoBehaviour
 	{
 		CreatePositions();
 
-		if(currentJob == null)
+		gm = gameObject.GetComponent<GameManager>();
+
+		if (currentJob == null)
 			currentJob = startingJob;
 	}
 
@@ -45,7 +48,8 @@ public class WorkManager : MonoBehaviour
 		gameObject.GetComponent<GameManager>().money += 
 			currentJob.HourlyPay * 
 			gameObject.GetComponent<UpgradesManager>().currentRaise.Data *
-			clickWeight;
+			clickWeight *
+			gm.activeMult;
 		AddClicks(clickWeight);
 		//gameObject.GetComponent<NewsTicker>().UpdateText("Update the text to this! " + currentClicks);
 	}
@@ -86,9 +90,20 @@ public class WorkManager : MonoBehaviour
 	/// </summary>
 	void CheckForPromotion()
 	{
-		if(currentJob.NextPosition != null
-			&& currentClicks >= currentJob.ClicksToPromotion)
-			currentJob = currentJob.NextPosition;
+		//Hook up prestige if the promotion has reached max
+		if(currentClicks >= currentJob.ClicksToPromotion)
+        {
+			if (currentJob.NextPosition == null)
+			{
+				gm.Prestige();
+				return;
+            }
+            else
+            {
+				currentJob = currentJob.NextPosition;
+			}
+		}
+			
 	}
 
 	/// <summary>
